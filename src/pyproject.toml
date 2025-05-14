@@ -1,0 +1,26 @@
+[build-system]
+requires = ["hatchling >= 1.26"]
+build-backend = "hatchling.build"
+
+[project]
+name = "automated_lie_detection_package"
+version = "0.0.1"
+authors = [
+  { name="Lucca Pfruender", email="luccip.upn@googlemail.com" },
+]
+description = "A small example package"
+readme = "README.md"
+requires-python = ">=3.9"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+license = "MIT"
+license-files = ["LICEN[CS]E*"]
+
+[project.urls]
+Homepage = "https://github.com/Programming-The-Next-Step-2025/automated-lie-detection"
+Issues = "https://github.com/Programming-The-Next-Step-2025/automated-lie-detection/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["automated_lie_detection_package"]
