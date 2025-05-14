@@ -24,3 +24,7 @@ Issues = "https://github.com/Programming-The-Next-Step-2025/automated-lie-detect
 
 [tool.hatch.build.targets.wheel]
 packages = ["automated_lie_detection_package"]
+
+dependencies = [
+    "joblib"
+]
