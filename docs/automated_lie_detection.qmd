@@ -1,0 +1,71 @@
+---
+title: "automated_lie_detection_package demo"
+format:
+  html:
+    code-fold: true
+jupyter: python3
+---
+
+# Introduction
+
+`automated_lie_detection_package` is a Python package for classifying statements as "truthful" or "deceptive" using machine learning models. It provides a simple API for making predictions and can be integrated into various applications.
+
+# Installation
+
+```bash
+pip3 install git+https://github.com/Programming-The-Next-Step-2025/automated-lie-detection.git
+```
+
+# Usage
+
+For a demonstration of using `modelprediction` to classify a statement, see the example below.
+
+```{python}
+from automated_lie_detection_package import modelprediction
+
+# Example input string
+input_text = "I swear I am innocent"
+
+# Example usage 
+# predicted_class, confidence = modelprediction(input_text)
+
+# Intended output:
+print("predicted_class: Deceptive")
+print("confidence: 87.5%")
+```
+
+# Use Cases
+
+- Automated interview analysis
+- Security screening
+- Academic research on deception detection
+
+# Example Output
+
+```
+predicted_class: Deceptive
+confidence: 87.5%
+include screenshots here
+```
+
+# API Reference
+
+- **modelprediction(input_text)**  
+  Classifies a statement as "truthful" or "deceptive" and returns the predicted class and confidence score.
+
+# FAQ
+
+**Q:** What input does `modelprediction` expect?  
+**A:** A single string statement.
+
+**Q:** What does the function return?  
+**A:** The predicted class ("truthful" or "deceptive") and a confidence percentage.
+
+# License
+
+MIT License
+
+# Credits
+
+Developed by Lucca Pfründer.  
+Built with XXX.
