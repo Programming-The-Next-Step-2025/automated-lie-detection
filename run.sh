@@ -1,0 +1,1 @@
+python3 -m streamlit run src/automated_lie_detection_package/app.py --server.port=8501

@@ -9,3 +9,6 @@ The application is built using Streamlit, allowing users to submit statements of
 ## Intended Use
 
 The model is specifically trained on autobiographical statements. As such, this tool is designed to evaluate the credibility of personal narratives, such as stories shared in casual conversations.
+
+##
+run the app with ./run.sh
