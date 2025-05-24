@@ -1,10 +1,7 @@
 import streamlit as st
 
+# Set page configuration for the Streamlit app including title and icon
 st.set_page_config(page_title="APA", page_icon="random")
-
-# Load custom CSS
-with open("./style/style.css") as f:
-    st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
 # Define pages
 welcome_page = st.Page("pages/welcome_page.py")

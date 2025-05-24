@@ -106,28 +106,121 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h1>Installation</h1>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip3</span> install git+https://github.com/Programming-The-Next-Step-2025/automated-lie-detection.git</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
+<section id="model-folder-location" class="level1">
+<h1>Model Folder Location</h1>
+<p>If you did <strong>not</strong> clone the repository and installed the package via <code>pip3</code>, you need to manually create a <code>models</code> folder in your current working directory (the directory from which you will run the app or scripts).</p>
+<p><strong>Folder structure should look like:</strong></p>
+<pre><code>your_project/
+├── models/
+│   └── [model files here]
+├── your_script.py</code></pre>
+</section>
+<section id="downloading-the-model" class="level1">
+<h1>Downloading the Model</h1>
+<p>Before making predictions, download the model files from Google Drive into the <code>models</code> folder:</p>
+<div id="182381b8" class="cell" data-execution_count="1">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> automated_lie_detection_package <span class="im">import</span> download_model_folder_from_gdrive</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># This will download the model files into the 'models' directory</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>download_model_folder_from_gdrive()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Retrieving folder contents</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Processing file 1BQHmFSnb2vXK5mOE5FGsZutdF1uwybGf config.json
+Processing file 1BLONRrK9MXjzjpkOKv-D1ap0WOgzh2jd model.safetensors
+Processing file 1BfQqQQ7nQfqH3mS4H58qsBFcCJLutZPh special_tokens_map.json
+Processing file 1Bo1gubAWxn1iGvZ6G_oQypVlvH_Ee7Fy tokenizer_config.json
+Processing file 1BU1AEtGx7GFvlxo8bJwLuaa-Xo9hgBzr tokenizer.json
+Processing file 1BW1RYjeFNeleBmhy9O-m5bMsDK7zmi9d vocab.txt</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Retrieving folder contents completed
+Building directory structure
+Building directory structure completed
+Downloading...
+From: https://drive.google.com/uc?id=1BQHmFSnb2vXK5mOE5FGsZutdF1uwybGf
+To: /Users/luccapfrunder/Documents/GitHub/automated-lie-detection/docs/models/config.json
+  0%|          | 0.00/615 [00:00&lt;?, ?B/s]100%|██████████| 615/615 [00:00&lt;00:00, 810kB/s]
+Downloading...
+From (original): https://drive.google.com/uc?id=1BLONRrK9MXjzjpkOKv-D1ap0WOgzh2jd
+From (redirected): https://drive.google.com/uc?id=1BLONRrK9MXjzjpkOKv-D1ap0WOgzh2jd&amp;confirm=t&amp;uuid=48dda64b-80e9-4ab9-955f-16d27e490296
+To: /Users/luccapfrunder/Documents/GitHub/automated-lie-detection/docs/models/model.safetensors
+  0%|          | 0.00/268M [00:00&lt;?, ?B/s]  0%|          | 1.05M/268M [00:00&lt;00:33, 7.95MB/s]  1%|          | 3.15M/268M [00:00&lt;00:18, 14.2MB/s]  2%|▏         | 5.24M/268M [00:00&lt;00:16, 15.6MB/s]  3%|▎         | 7.34M/268M [00:00&lt;00:14, 17.5MB/s]  4%|▎         | 9.44M/268M [00:00&lt;00:14, 17.7MB/s]  4%|▍         | 11.5M/268M [00:00&lt;00:13, 18.5MB/s]  5%|▌         | 13.6M/268M [00:00&lt;00:14, 17.6MB/s]  6%|▌         | 15.7M/268M [00:00&lt;00:15, 16.0MB/s]  7%|▋         | 17.8M/268M [00:01&lt;00:16, 15.0MB/s]  7%|▋         | 19.4M/268M [00:01&lt;00:17, 14.2MB/s]  8%|▊         | 21.0M/268M [00:01&lt;00:17, 14.2MB/s]  9%|▊         | 23.1M/268M [00:01&lt;00:16, 14.9MB/s]  9%|▉         | 25.2M/268M [00:01&lt;00:15, 15.5MB/s] 10%|█         | 27.3M/268M [00:01&lt;00:14, 16.2MB/s] 11%|█         | 29.4M/268M [00:01&lt;00:14, 16.8MB/s] 12%|█▏        | 31.5M/268M [00:01&lt;00:13, 17.4MB/s] 13%|█▎        | 33.6M/268M [00:02&lt;00:13, 17.7MB/s] 13%|█▎        | 35.7M/268M [00:02&lt;00:12, 17.9MB/s] 14%|█▍        | 37.7M/268M [00:02&lt;00:12, 18.3MB/s] 15%|█▍        | 39.8M/268M [00:02&lt;00:12, 18.3MB/s] 16%|█▌        | 41.9M/268M [00:02&lt;00:12, 17.5MB/s] 16%|█▋        | 44.0M/268M [00:02&lt;00:12, 17.4MB/s] 17%|█▋        | 46.1M/268M [00:02&lt;00:12, 17.4MB/s] 18%|█▊        | 48.2M/268M [00:02&lt;00:12, 17.4MB/s] 19%|█▉        | 50.3M/268M [00:03&lt;00:12, 17.8MB/s] 20%|█▉        | 52.4M/268M [00:03&lt;00:11, 18.0MB/s] 20%|██        | 54.5M/268M [00:03&lt;00:12, 17.8MB/s] 21%|██        | 56.6M/268M [00:03&lt;00:11, 17.7MB/s] 22%|██▏       | 58.7M/268M [00:03&lt;00:11, 17.7MB/s] 23%|██▎       | 60.8M/268M [00:03&lt;00:11, 17.9MB/s] 23%|██▎       | 62.9M/268M [00:03&lt;00:11, 17.9MB/s] 24%|██▍       | 65.0M/268M [00:03&lt;00:11, 18.2MB/s] 25%|██▌       | 67.1M/268M [00:03&lt;00:11, 18.2MB/s] 26%|██▌       | 69.2M/268M [00:04&lt;00:10, 18.8MB/s] 27%|██▋       | 71.3M/268M [00:04&lt;00:10, 18.0MB/s] 28%|██▊       | 73.9M/268M [00:04&lt;00:10, 19.1MB/s] 28%|██▊       | 76.0M/268M [00:04&lt;00:09, 19.5MB/s] 29%|██▉       | 78.1M/268M [00:04&lt;00:09, 19.5MB/s] 30%|███       | 80.7M/268M [00:04&lt;00:08, 21.0MB/s] 31%|███       | 83.4M/268M [00:04&lt;00:08, 21.6MB/s] 32%|███▏      | 86.0M/268M [00:04&lt;00:08, 22.2MB/s] 33%|███▎      | 88.6M/268M [00:04&lt;00:07, 22.7MB/s] 34%|███▍      | 91.2M/268M [00:05&lt;00:07, 23.4MB/s] 35%|███▌      | 93.8M/268M [00:05&lt;00:10, 16.1MB/s] 36%|███▌      | 96.5M/268M [00:05&lt;00:09, 17.8MB/s] 37%|███▋      | 99.1M/268M [00:05&lt;00:08, 18.8MB/s] 38%|███▊      | 102M/268M [00:05&lt;00:08, 20.0MB/s]  39%|███▉      | 104M/268M [00:05&lt;00:07, 20.9MB/s] 40%|███▉      | 107M/268M [00:05&lt;00:07, 21.5MB/s] 41%|████      | 110M/268M [00:06&lt;00:07, 21.8MB/s] 42%|████▏     | 112M/268M [00:06&lt;00:06, 22.5MB/s] 43%|████▎     | 115M/268M [00:06&lt;00:06, 23.1MB/s] 44%|████▍     | 117M/268M [00:06&lt;00:06, 22.9MB/s] 45%|████▍     | 120M/268M [00:06&lt;00:06, 23.0MB/s] 46%|████▌     | 123M/268M [00:06&lt;00:06, 23.3MB/s] 47%|████▋     | 125M/268M [00:06&lt;00:06, 23.7MB/s] 48%|████▊     | 128M/268M [00:06&lt;00:05, 23.9MB/s] 49%|████▊     | 131M/268M [00:06&lt;00:05, 23.4MB/s] 50%|████▉     | 133M/268M [00:07&lt;00:05, 23.6MB/s] 51%|█████     | 136M/268M [00:07&lt;00:05, 23.8MB/s] 52%|█████▏    | 138M/268M [00:07&lt;00:05, 23.6MB/s] 53%|█████▎    | 141M/268M [00:07&lt;00:05, 23.1MB/s] 54%|█████▎    | 144M/268M [00:07&lt;00:05, 22.2MB/s] 55%|█████▍    | 146M/268M [00:07&lt;00:06, 19.9MB/s] 55%|█████▌    | 148M/268M [00:07&lt;00:06, 19.9MB/s] 57%|█████▋    | 152M/268M [00:07&lt;00:05, 21.4MB/s] 58%|█████▊    | 154M/268M [00:08&lt;00:05, 20.7MB/s] 59%|█████▊    | 157M/268M [00:08&lt;00:05, 20.9MB/s] 60%|█████▉    | 159M/268M [00:08&lt;00:05, 20.7MB/s] 60%|██████    | 161M/268M [00:08&lt;00:05, 20.0MB/s] 61%|██████    | 164M/268M [00:08&lt;00:05, 19.8MB/s] 62%|██████▏   | 166M/268M [00:08&lt;00:05, 20.2MB/s] 63%|██████▎   | 168M/268M [00:08&lt;00:04, 20.1MB/s] 64%|██████▎   | 170M/268M [00:08&lt;00:04, 20.2MB/s] 65%|██████▍   | 173M/268M [00:08&lt;00:04, 20.6MB/s] 65%|██████▌   | 175M/268M [00:09&lt;00:04, 20.6MB/s] 66%|██████▌   | 177M/268M [00:09&lt;00:04, 20.5MB/s] 67%|██████▋   | 179M/268M [00:09&lt;00:04, 20.4MB/s] 68%|██████▊   | 181M/268M [00:09&lt;00:04, 20.4MB/s] 69%|██████▊   | 184M/268M [00:09&lt;00:04, 20.2MB/s] 69%|██████▉   | 186M/268M [00:09&lt;00:04, 20.4MB/s] 70%|███████   | 188M/268M [00:09&lt;00:04, 19.5MB/s] 71%|███████   | 190M/268M [00:09&lt;00:04, 19.1MB/s] 72%|███████▏  | 192M/268M [00:09&lt;00:03, 19.3MB/s] 73%|███████▎  | 195M/268M [00:10&lt;00:03, 19.4MB/s] 73%|███████▎  | 197M/268M [00:10&lt;00:03, 19.2MB/s] 74%|███████▍  | 199M/268M [00:10&lt;00:03, 18.6MB/s] 75%|███████▍  | 201M/268M [00:10&lt;00:05, 13.3MB/s] 76%|███████▌  | 203M/268M [00:10&lt;00:04, 14.6MB/s] 77%|███████▋  | 206M/268M [00:10&lt;00:03, 16.2MB/s] 78%|███████▊  | 208M/268M [00:10&lt;00:03, 17.2MB/s] 78%|███████▊  | 210M/268M [00:10&lt;00:03, 17.9MB/s] 79%|███████▉  | 212M/268M [00:11&lt;00:02, 18.7MB/s] 80%|███████▉  | 214M/268M [00:11&lt;00:02, 19.2MB/s] 81%|████████  | 217M/268M [00:11&lt;00:02, 19.7MB/s] 82%|████████▏ | 219M/268M [00:11&lt;00:02, 20.2MB/s] 83%|████████▎ | 221M/268M [00:11&lt;00:02, 19.7MB/s] 83%|████████▎ | 223M/268M [00:11&lt;00:02, 19.8MB/s] 84%|████████▍ | 225M/268M [00:11&lt;00:02, 19.8MB/s] 85%|████████▍ | 228M/268M [00:11&lt;00:02, 19.7MB/s] 86%|████████▌ | 230M/268M [00:11&lt;00:01, 19.7MB/s] 87%|████████▋ | 232M/268M [00:12&lt;00:01, 19.8MB/s] 87%|████████▋ | 234M/268M [00:12&lt;00:01, 19.9MB/s] 88%|████████▊ | 236M/268M [00:12&lt;00:01, 20.1MB/s] 89%|████████▉ | 238M/268M [00:12&lt;00:01, 20.1MB/s] 90%|████████▉ | 240M/268M [00:12&lt;00:01, 19.8MB/s] 90%|█████████ | 242M/268M [00:12&lt;00:01, 19.7MB/s] 91%|█████████ | 244M/268M [00:12&lt;00:01, 19.6MB/s] 92%|█████████▏| 246M/268M [00:12&lt;00:01, 19.0MB/s] 93%|█████████▎| 249M/268M [00:12&lt;00:00, 19.3MB/s] 94%|█████████▎| 251M/268M [00:13&lt;00:00, 19.8MB/s] 94%|█████████▍| 253M/268M [00:13&lt;00:00, 19.6MB/s] 95%|█████████▌| 255M/268M [00:13&lt;00:00, 19.1MB/s] 96%|█████████▌| 257M/268M [00:13&lt;00:00, 19.7MB/s] 97%|█████████▋| 260M/268M [00:13&lt;00:00, 18.9MB/s] 98%|█████████▊| 262M/268M [00:13&lt;00:00, 18.6MB/s] 98%|█████████▊| 264M/268M [00:13&lt;00:00, 18.2MB/s] 99%|█████████▉| 266M/268M [00:13&lt;00:00, 18.0MB/s]100%|██████████| 268M/268M [00:13&lt;00:00, 17.7MB/s]100%|██████████| 268M/268M [00:13&lt;00:00, 19.1MB/s]
+Downloading...
+From: https://drive.google.com/uc?id=1BfQqQQ7nQfqH3mS4H58qsBFcCJLutZPh
+To: /Users/luccapfrunder/Documents/GitHub/automated-lie-detection/docs/models/special_tokens_map.json
+  0%|          | 0.00/125 [00:00&lt;?, ?B/s]100%|██████████| 125/125 [00:00&lt;00:00, 363kB/s]
+Downloading...
+From: https://drive.google.com/uc?id=1Bo1gubAWxn1iGvZ6G_oQypVlvH_Ee7Fy
+To: /Users/luccapfrunder/Documents/GitHub/automated-lie-detection/docs/models/tokenizer_config.json
+  0%|          | 0.00/1.23k [00:00&lt;?, ?B/s]100%|██████████| 1.23k/1.23k [00:00&lt;00:00, 4.00MB/s]
+Downloading...
+From: https://drive.google.com/uc?id=1BU1AEtGx7GFvlxo8bJwLuaa-Xo9hgBzr
+To: /Users/luccapfrunder/Documents/GitHub/automated-lie-detection/docs/models/tokenizer.json
+  0%|          | 0.00/711k [00:00&lt;?, ?B/s]100%|██████████| 711k/711k [00:00&lt;00:00, 6.55MB/s]100%|██████████| 711k/711k [00:00&lt;00:00, 6.45MB/s]
+Downloading...
+From: https://drive.google.com/uc?id=1BW1RYjeFNeleBmhy9O-m5bMsDK7zmi9d
+To: /Users/luccapfrunder/Documents/GitHub/automated-lie-detection/docs/models/vocab.txt
+  0%|          | 0.00/232k [00:00&lt;?, ?B/s]100%|██████████| 232k/232k [00:00&lt;00:00, 3.21MB/s]
+Download completed</code></pre>
+</div>
+</div>
+</section>
+<section id="supported-model-types" class="level1">
+<h1>Supported Model Types</h1>
+<p>The <code>modelprediction</code> function expects a model folder containing files for a Hugging Face Transformers <strong>sequence classification model</strong> (such as DistilBERT, BERT, RoBERTa, etc.) that can be loaded with <code>AutoTokenizer.from_pretrained</code> and <code>AutoModelForSequenceClassification.from_pretrained</code>.</p>
+<p><strong>Requirements:</strong> - The model folder must include all necessary files (e.g., <code>config.json</code>, <code>pytorch_model.bin</code>, <code>tokenizer.json</code>, <code>vocab.txt</code>, etc.). - The model should be trained or fine-tuned for sequence (text) classification tasks.</p>
+<p><strong>Note:</strong><br>
+Other model types (e.g., language models for text generation, token classification, etc.) are <strong>not supported</strong> by <code>modelprediction</code> and will result in errors.</p>
+</section>
 <section id="usage" class="level1">
 <h1>Usage</h1>
 <p>For a demonstration of using <code>modelprediction</code> to classify a statement, see the example below.</p>
-<div id="966beb23" class="cell" data-execution_count="1">
+<div id="e2297e68" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> automated_lie_detection_package <span class="im">import</span> modelprediction</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Example input string</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>input_text <span class="op">=</span> <span class="st">"I swear I am innocent"</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Example usage </span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># predicted_class, confidence = modelprediction(input_text)</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Intended output:</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"predicted_class: Deceptive"</span>)</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"confidence: 87.5%"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> automated_lie_detection_package <span class="im">import</span> modelprediction</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>input_text <span class="op">=</span> <span class="st">"I swear I am innocent"</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Directly call modelprediction with just the input text</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> modelprediction(input_text)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>predicted_class: Deceptive
-confidence: 87.5%</code></pre>
+<pre><code>The statement was classified as deceptive with 68.08% confidence.</code></pre>
 </div>
+</div>
+</section>
+<section id="launching-the-streamlit-app" class="level1">
+<h1>Launching the Streamlit App</h1>
+<p>To launch the web app, run the following command from your project root (where <code>run.sh</code> is located):</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./run.sh</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This will start the Streamlit app, which you can access in your browser (default: http://localhost:8501).</p>
+</section>
+<section id="starting-the-streamlit-app-without-run.sh" class="level1">
+<h1>Starting the Streamlit App Without <code>run.sh</code></h1>
+<p>If you do <strong>not</strong> have the <code>run.sh</code> script (for example, if you installed via <code>pip3</code> and did not clone the repo), you can start the app manually with:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-m</span> streamlit run path/to/app.py <span class="at">--server.port</span><span class="op">=</span>8501</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Replace <code>path/to/app.py</code> with the actual path to the app file, for example:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-m</span> streamlit run src/automated_lie_detection_package/app.py <span class="at">--server.port</span><span class="op">=</span>8501</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If needed, the number after <code>--server.port</code> can be changed to any available port, as long as that port is not already in use.</p>
+</section>
+<section id="clearing-the-models-folder" class="level1">
+<h1>Clearing the Models Folder</h1>
+<p>If you want to remove all files and subdirectories from the <code>models</code> folder (for example, before downloading a new model), use the <code>clear_models_folder</code> function:</p>
+<div id="75b871c6" class="cell" data-execution_count="3">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> automated_lie_detection_package <span class="im">import</span> clear_models_folder</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co"># This will delete all files and subfolders in the 'models' directory</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>clear_models_folder()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 </section>
 <section id="use-cases" class="level1">
@@ -136,27 +229,31 @@ confidence: 87.5%</code></pre>
 <li>Automated interview analysis</li>
 <li>Security screening</li>
 <li>Academic research on deception detection</li>
+<li>Personal statement analysis</li>
 </ul>
 </section>
 <section id="example-output" class="level1">
 <h1>Example Output</h1>
-<pre><code>predicted_class: Deceptive
-confidence: 87.5%
-include screenshots here</code></pre>
+<pre><code>The statement was classified as deceptive with 87.5% confidence.</code></pre>
 </section>
 <section id="api-reference" class="level1">
 <h1>API Reference</h1>
 <ul>
-<li><strong>modelprediction(input_text)</strong><br>
-Classifies a statement as “truthful” or “deceptive” and returns the predicted class and confidence score.</li>
+<li><p><strong>download_model_folder_from_gdrive(gdrive_folder_url=“https://drive.google.com/drive/folders/1BByWnxuJ8gXWDPEWjPjAnU4iVaeQp1dZ?usp=sharing”, output_dir=“models”)</strong><br>
+Downloads the pretrained model from Google Drive into the specified directory.<br>
+If no URL is provided, the default public model folder will be used.</p></li>
+<li><p><strong>modelprediction(input_text)</strong><br>
+Classifies a statement as “truthful” or “deceptive” and returns a message with the predicted class and confidence score.</p></li>
+<li><p><strong>clear_models_folder(models_dir=“models”)</strong><br>
+Deletes all files and subdirectories in the specified models folder.</p></li>
 </ul>
 </section>
 <section id="faq" class="level1">
 <h1>FAQ</h1>
 <p><strong>Q:</strong> What input does <code>modelprediction</code> expect?<br>
-<strong>A:</strong> A single string statement.</p>
+<strong>A:</strong> A single string statement, plus the loaded tokenizer and model.</p>
 <p><strong>Q:</strong> What does the function return?<br>
-<strong>A:</strong> The predicted class (“truthful” or “deceptive”) and a confidence percentage.</p>
+<strong>A:</strong> A message string describing the predicted class (“truthful” or “deceptive”) and the confidence percentage.</p>
 </section>
 <section id="license" class="level1">
 <h1>License</h1>
@@ -165,7 +262,7 @@ Classifies a statement as “truthful” or “deceptive” and returns the pred
 <section id="credits" class="level1">
 <h1>Credits</h1>
 <p>Developed by Lucca Pfründer.<br>
-Built with XXX.</p>
+Built with Python, Hugging Face Transformers, and Streamlit.</p>
 </section>
 
 </main>

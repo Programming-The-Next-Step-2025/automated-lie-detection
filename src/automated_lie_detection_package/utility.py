@@ -1,26 +1,41 @@
-import joblib
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
 import numpy as np
 import streamlit as st
+import os
+import gdown
 
-def load_model(model_path):
+
+def download_model_folder_from_gdrive(gdrive_folder_url="https://drive.google.com/drive/folders/1BByWnxuJ8gXWDPEWjPjAnU4iVaeQp1dZ?usp=sharing", output_dir="models"):
     """
-    Loads a machine learning model from a specified file path.
+    Downloads a folder from Google Drive and puts it into the models folder. 
 
     Args:
-        model_path: The file path to the saved model.
+        gdrive_folder_url: The Google Drive folder URL.
+        output_dir: The directory where the model folder will be placed (default: "models").
 
     Returns:
-        The loaded machine learning model.
+        None
     """
-    return joblib.load(model_path)
+    os.makedirs(output_dir, exist_ok=True)
+    gdown.download_folder(url=gdrive_folder_url, output=output_dir, quiet=False, use_cookies=False)
 
-#models and tokenizer
-tokenizer = AutoTokenizer.from_pretrained('XXX')
-#model = load_file('models/fine_tuned_model/model.safetensors')
-model = AutoModelForSequenceClassification.from_pretrained('XXX', use_safetensors=True)
+def load_local_model(model_dir="models"):
+    """
+    Loads a pretrained sequence classification model and its tokenizer from a local directory. 
 
-def predictionloop(frase):
+    Args:
+        model_dir: The path to the directory containing the model files 
+                   (default: "models").
+
+    Returns:
+        tokenizer: The loaded tokenizer.
+        model: The loaded sequence classification model.
+    """
+    tokenizer = AutoTokenizer.from_pretrained(model_dir)
+    model = AutoModelForSequenceClassification.from_pretrained(model_dir, use_safetensors=True)
+    return tokenizer, model
+
+def predictionloop(frase, tokenizer, model):
     """
     Process the input text and generate prediction and confidence score.
     Args:
@@ -49,9 +64,10 @@ def modelprediction(input_text):
         input_text: The input string to classify.
 
     Returns:
-        predicted_class: 'truthful' or 'deceptive'
-        confidence: Confidence score as a percentage (float)
+        message: A string describing the predicted class ('truthful' or 'deceptive') and the confidence score as a percentage.
     """
+    tokenizer = AutoTokenizer.from_pretrained("models")
+    model = AutoModelForSequenceClassification.from_pretrained("models", use_safetensors=True)
     inputs = tokenizer(input_text, return_tensors="pt")
     outputs = model(**inputs)
     probabilities = outputs.logits.softmax(dim=-1)
@@ -60,6 +76,24 @@ def modelprediction(input_text):
     class_name = "truthful" if predicted_label == 0 else "deceptive"
     message = f"The statement was classified as {class_name} with {class_prob * 100:.2f}% confidence."
     return message
+
+def clear_models_folder(models_dir="models"):
+    """
+    Deletes all files and subdirectories in the specified models folder.
+
+    Args:
+        models_dir: The path to the models directory (default: "models").
+
+    Returns:
+        None
+    """
+    if os.path.exists(models_dir):
+        for filename in os.listdir(models_dir):
+            file_path = os.path.join(models_dir, filename)
+            if os.path.isfile(file_path) or os.path.islink(file_path):
+                os.unlink(file_path)
+            elif os.path.isdir(file_path):
+                shutil.rmtree(file_path)
 
 
 

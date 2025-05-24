@@ -26,5 +26,8 @@ Issues = "https://github.com/Programming-The-Next-Step-2025/automated-lie-detect
 packages = ["automated_lie_detection_package"]
 
 dependencies = [
-    "joblib"
+    "transformers",
+    "numpy",
+    "streamlit",
+    "gdown"
 ]

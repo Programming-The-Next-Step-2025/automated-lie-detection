@@ -16,6 +16,40 @@ jupyter: python3
 pip3 install git+https://github.com/Programming-The-Next-Step-2025/automated-lie-detection.git
 ```
 
+# Model Folder Location
+
+If you did **not** clone the repository and installed the package via `pip3`, you need to manually create a `models` folder in your current working directory (the directory from which you will run the app or scripts).  
+
+**Folder structure should look like:**
+```
+your_project/
+├── models/
+│   └── [model files here]
+├── your_script.py
+```
+
+# Downloading the Model
+
+Before making predictions, download the model files from Google Drive into the `models` folder:
+
+```{python}
+from automated_lie_detection_package import download_model_folder_from_gdrive
+
+# This will download the model files into the 'models' directory
+download_model_folder_from_gdrive()
+```
+
+# Supported Model Types
+
+The `modelprediction` function expects a model folder containing files for a Hugging Face Transformers **sequence classification model** (such as DistilBERT, BERT, RoBERTa, etc.) that can be loaded with `AutoTokenizer.from_pretrained` and `AutoModelForSequenceClassification.from_pretrained`.
+
+**Requirements:**
+- The model folder must include all necessary files (e.g., `config.json`, `pytorch_model.bin`, `tokenizer.json`, `vocab.txt`, etc.).
+- The model should be trained or fine-tuned for sequence (text) classification tasks.
+
+**Note:**  
+Other model types (e.g., language models for text generation, token classification, etc.) are **not supported** by `modelprediction` and will result in errors.
+
 # Usage
 
 For a demonstration of using `modelprediction` to classify a statement, see the example below.
@@ -23,15 +57,47 @@ For a demonstration of using `modelprediction` to classify a statement, see the 
 ```{python}
 from automated_lie_detection_package import modelprediction
 
-# Example input string
 input_text = "I swear I am innocent"
 
-# Example usage 
-# predicted_class, confidence = modelprediction(input_text)
+# Directly call modelprediction with just the input text
+result = modelprediction(input_text)
+print(result)
+```
 
-# Intended output:
-print("predicted_class: Deceptive")
-print("confidence: 87.5%")
+# Launching the Streamlit App
+
+To launch the web app, run the following command from your project root (where `run.sh` is located):
+
+```bash
+./run.sh
+```
+
+This will start the Streamlit app, which you can access in your browser (default: http://localhost:8501).
+
+# Starting the Streamlit App Without `run.sh`
+
+If you do **not** have the `run.sh` script (for example, if you installed via `pip3` and did not clone the repo), you can start the app manually with:
+
+```bash
+python3 -m streamlit run path/to/app.py --server.port=8501
+```
+
+Replace `path/to/app.py` with the actual path to the app file, for example:
+```bash
+python3 -m streamlit run src/automated_lie_detection_package/app.py --server.port=8501
+```
+
+If needed, the number after `--server.port` can be changed to any available port, as long as that port is not already in use.
+
+# Clearing the Models Folder
+
+If you want to remove all files and subdirectories from the `models` folder (for example, before downloading a new model), use the `clear_models_folder` function:
+
+```{python}
+from automated_lie_detection_package import clear_models_folder
+
+# This will delete all files and subfolders in the 'models' directory
+clear_models_folder()
 ```
 
 # Use Cases
@@ -39,27 +105,33 @@ print("confidence: 87.5%")
 - Automated interview analysis
 - Security screening
 - Academic research on deception detection
+- Personal statement analysis
 
 # Example Output
 
 ```
-predicted_class: Deceptive
-confidence: 87.5%
-include screenshots here
+The statement was classified as deceptive with 87.5% confidence.
 ```
 
 # API Reference
 
+- **download_model_folder_from_gdrive(gdrive_folder_url="https://drive.google.com/drive/folders/1BByWnxuJ8gXWDPEWjPjAnU4iVaeQp1dZ?usp=sharing", output_dir="models")**  
+  Downloads the pretrained model from Google Drive into the specified directory.  
+  If no URL is provided, the default public model folder will be used.
+
 - **modelprediction(input_text)**  
-  Classifies a statement as "truthful" or "deceptive" and returns the predicted class and confidence score.
+  Classifies a statement as "truthful" or "deceptive" and returns a message with the predicted class and confidence score.
+
+- **clear_models_folder(models_dir="models")**  
+  Deletes all files and subdirectories in the specified models folder.
 
 # FAQ
 
 **Q:** What input does `modelprediction` expect?  
-**A:** A single string statement.
+**A:** A single string statement, plus the loaded tokenizer and model.
 
 **Q:** What does the function return?  
-**A:** The predicted class ("truthful" or "deceptive") and a confidence percentage.
+**A:** A message string describing the predicted class ("truthful" or "deceptive") and the confidence percentage.
 
 # License
 
@@ -68,4 +140,4 @@ MIT License
 # Credits
 
 Developed by Lucca Pfründer.  
-Built with XXX.
+Built with Python, Hugging Face Transformers, and Streamlit.

@@ -12,3 +12,14 @@ The model is specifically trained on autobiographical statements. As such, this 
 
 ##
 run the app with ./run.sh
+
+## clear model folder if not empty 
+clear_model_folder()
+## download model
+"https://drive.google.com/drive/folders/1BByWnxuJ8gXWDPEWjPjAnU4iVaeQp1dZ?usp=sharing"
+
+## Load model loacally 
+load_local_model
+
+
+
