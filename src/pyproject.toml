@@ -23,7 +23,7 @@ Homepage = "https://github.com/Programming-The-Next-Step-2025/automated-lie-dete
 Issues = "https://github.com/Programming-The-Next-Step-2025/automated-lie-detection/issues"
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/automated_lie_detection_package"]
+packages = ["automated_lie_detection_package"]
 
 dependencies = [
     "transformers",
