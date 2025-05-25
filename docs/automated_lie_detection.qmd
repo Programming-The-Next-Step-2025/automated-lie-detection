@@ -16,6 +16,15 @@ jupyter: python3
 pip3 install git+https://github.com/Programming-The-Next-Step-2025/automated-lie-detection.git
 ```
 
+**Note** 
+
+Depending on your environment, you may need to use pip instead of pip3.
+For example, on some systems, the commands would be:
+
+```bash
+pip install git+https://github.com/Programming-The-Next-Step-2025/automated-lie-detection.git
+```
+
 # Model Folder Location
 
 If you did **not** clone the repository and installed the package via `pip3`, you need to manually create a `models` folder in your current working directory (the directory from which you will run the app or scripts).  
@@ -88,6 +97,15 @@ python3 -m streamlit run src/automated_lie_detection_package/app.py --server.por
 ```
 
 If needed, the number after `--server.port` can be changed to any available port, as long as that port is not already in use.
+
+**Note**
+
+Depending on your environment, you may need to use pip instead of pip3.
+For example, on some systems, the commands would be:
+
+```bash
+python3 -m streamlit run path/to/app.py --server.port=8501
+```
 
 # Clearing the Models Folder
 

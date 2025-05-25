@@ -1,7 +1,7 @@
 import streamlit as st
 
 # Set page configuration for the Streamlit app including title and icon
-st.set_page_config(page_title="APA", page_icon="random")
+st.set_page_config(page_title="LIE-DETECTOR", page_icon="random")
 
 # Define pages
 welcome_page = st.Page("pages/welcome_page.py")
