@@ -10,6 +10,10 @@ jupyter: python3
 
 `automated_lie_detection_package` is a Python package for classifying statements as "truthful" or "deceptive" using machine learning models. It provides a simple API for making predictions and can be integrated into various applications.
 
+![Streamlit App Welcome Page](images/welcome_page.png)
+
+![Streamlit App Automated Lie Detector](images/main_page.png)
+
 # Installation
 
 ```bash
@@ -33,6 +37,8 @@ from automated_lie_detection_package import download_model_folder_from_gdrive
 
 download_model_folder_from_gdrive()
 ```
+
+![Model Download Example](images/model_download.png)
 
 **Folder structure should look like:**
 ```
@@ -172,6 +178,8 @@ clear_models_folder()
 ```
 The statement was classified as deceptive with 87.5% confidence.
 ```
+
+![Prediction Example](images/modelprediction.png)
 
 # API Reference
 
