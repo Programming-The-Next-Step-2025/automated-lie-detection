@@ -16,36 +16,34 @@ jupyter: python3
 pip3 install git+https://github.com/Programming-The-Next-Step-2025/automated-lie-detection.git
 ```
 
-**Note** 
+> **Note:**  
+> Depending on your environment, you may need to use `pip` instead of `pip3`, and `python` instead of `python3`.  
+> For example:
+> ```bash
+> pip install git+https://github.com/Programming-The-Next-Step-2025/automated-lie-detection.git
+> ```
 
-Depending on your environment, you may need to use pip instead of pip3.
-For example, on some systems, the commands would be:
 
-```bash
-pip install git+https://github.com/Programming-The-Next-Step-2025/automated-lie-detection.git
+# Model Folder Setup
+
+Before making any predictions, you need to download a pretrained model into a local `models/` directory.
+
+```{python}
+from automated_lie_detection_package import download_model_folder_from_gdrive
+
+download_model_folder_from_gdrive()
 ```
-
-# Model Folder Location
-
-If you did **not** clone the repository and installed the package via `pip3`, you need to manually create a `models` folder in your current working directory (the directory from which you will run the app or scripts).  
 
 **Folder structure should look like:**
 ```
 your_project/
 ├── models/
 │   └── [model files here]
-├── your_script.py
-```
-
-# Downloading the Model
-
-Before making predictions, download the model files from Google Drive into the `models` folder:
-
-```{python}
-from automated_lie_detection_package import download_model_folder_from_gdrive
-
-# This will download the model files into the 'models' directory
-download_model_folder_from_gdrive()
+├── src/
+│   └── automated_lie_detection_package/
+│       └── ...
+├── run.sh
+└── ...
 ```
 
 # Supported Model Types
@@ -71,6 +69,50 @@ input_text = "I swear I am innocent"
 # Directly call modelprediction with just the input text
 result = modelprediction(input_text)
 print(result)
+```
+
+# Launching the Streamlit App
+
+To launch the web app, run the following command from your project root (where `run.sh` is located):
+
+```bash
+./run.sh
+```
+
+This will start the Streamlit app, which you can access in your browser (default: http://localhost:8501).
+
+# Starting the Streamlit App Without `run.sh`
+
+If you do **not** have the `run.sh` script (for example, if you installed via `pip3` and did not clone the repo), you can start the app manually with:
+
+```bash
+python3 -m streamlit run src/automated_lie_detection_package/app.py --server.port=8501
+```
+
+> **Note:**  
+> You can use `python` instead of `python3` if that's how Python is invoked on your system.  
+> You can change the number after `--server.port` to any available port, as long as that port is not already in use.
+
+# Creating `run.sh` Yourself
+
+If you want to create the `run.sh` script for convenience, create a new file named `run.sh` in your project root with the following content:
+
+```bash
+#!/bin/bash
+python3 -m streamlit run src/automated_lie_detection_package/app.py --server.port=8501
+```
+
+Or, if your environment uses `python` instead of `python3`:
+
+```bash
+#!/bin/bash
+python -m streamlit run src/automated_lie_detection_package/app.py --server.port=8501
+```
+
+Then make it executable:
+
+```bash
+chmod +x run.sh
 ```
 
 # Launching the Streamlit App
@@ -146,7 +188,7 @@ The statement was classified as deceptive with 87.5% confidence.
 # FAQ
 
 **Q:** What input does `modelprediction` expect?  
-**A:** A single string statement, plus the loaded tokenizer and model.
+**A:** A single string statement.
 
 **Q:** What does the function return?  
 **A:** A message string describing the predicted class ("truthful" or "deceptive") and the confidence percentage.
