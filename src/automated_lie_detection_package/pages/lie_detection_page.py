@@ -1,6 +1,7 @@
 import streamlit as st
 from automated_lie_detection_package.utility import load_local_model, predictionloop
 import pandas as pd
+import os
 
 # Load the pretrained model and tokenizer from the local 'models' directory
 tokenizer, model = load_local_model("models")
@@ -10,7 +11,7 @@ if "history" not in st.session_state:
     st.session_state.history = []
 
 # Set up the Streamlit app UI
-st.title("Automated Lie Detector")
+st.title("Lie Detection of Single Statements")
 st.write("Do you want to know if your autobiographical statement is truthful or deceptive?")
 st.write("If you want to test another statement, simply delete your input and press submit again.")
 
@@ -55,6 +56,10 @@ if st.session_state.history:
         file_name="prediction_history.csv",
         mime="text/csv"
     )
+    # Export to exp_data subfolder
+    exp_data_dir = "data/exp_data"
+    os.makedirs(exp_data_dir, exist_ok=True)
+    df.to_csv(os.path.join(exp_data_dir, "prediction_history.csv"), index=False)
             
 if st.button("Next"):
     st.switch_page("pages/batch_lie_detection_page.py")
