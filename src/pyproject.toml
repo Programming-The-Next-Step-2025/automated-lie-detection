@@ -29,5 +29,6 @@ dependencies = [
     "transformers",
     "numpy",
     "streamlit",
-    "gdown"
+    "gdown",
+    "pandas"
 ]

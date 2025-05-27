@@ -38,8 +38,6 @@ from automated_lie_detection_package import download_model_folder_from_gdrive
 download_model_folder_from_gdrive()
 ```
 
-![Model Download Example](images/model_download.png)
-
 **Folder structure should look like:**
 ```
 your_project/

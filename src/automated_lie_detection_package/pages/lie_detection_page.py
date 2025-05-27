@@ -1,8 +1,13 @@
 import streamlit as st
 from automated_lie_detection_package.utility import load_local_model, predictionloop
+import pandas as pd
 
 # Load the pretrained model and tokenizer from the local 'models' directory
 tokenizer, model = load_local_model("models")
+
+# Initialize prediction history in session state
+if "history" not in st.session_state:
+    st.session_state.history = []
 
 # Set up the Streamlit app UI
 st.title("Automated Lie Detector")
@@ -31,4 +36,23 @@ if submit_cont.button("Submit"):
     )
     # Show a progress bar representing the confidence score
     progr_cont.progress(int(prob))
+    # Add to history
+    st.session_state.history.append({
+        "Statement": user_input,
+        "Prediction": "TRUTHFUL" if risposta == 0 else "DECEPTIVE",
+        "Confidence (%)": f"{prob:.2f}"
+    })
+
+# Show history panel and download button if there is history
+if st.session_state.history:
+    df = pd.DataFrame(st.session_state.history)
+    st.subheader("Prediction History")
+    st.dataframe(df)
+    csv = df.to_csv(index=False).encode("utf-8")
+    st.download_button(
+        label="Download history as CSV",
+        data=csv,
+        file_name="prediction_history.csv",
+        mime="text/csv"
+    )
             
