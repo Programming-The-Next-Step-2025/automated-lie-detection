@@ -21,7 +21,9 @@ dependencies = [
     "numpy",
     "streamlit",
     "gdown",
-    "pandas"
+    "pandas",
+    "matplotlib.pyplot",
+    "transformers_interpret"
 ]
 
 [project.urls]

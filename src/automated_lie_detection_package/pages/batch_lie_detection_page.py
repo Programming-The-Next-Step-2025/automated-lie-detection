@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 from automated_lie_detection_package.utility import batch_modelprediction
 import csv
+import matplotlib.pyplot as plt
 
 st.title("Lie Detection of Multiple Statements")
 st.write("Upload a CSV file with a column containing autobiographical statements for batch prediction, or use the default example file.")
@@ -68,3 +69,37 @@ if df is not None and column_name:
             file_name="batch_predictions.csv",
             mime="text/csv"
         )
+
+        # --- Visualization ---
+        st.subheader("Prediction Distribution")
+        # Bar chart
+        st.bar_chart(results_df["prediction"].value_counts())
+        # Pie chart
+        st.write("Pie Chart:")
+        st.pyplot(
+            results_df["prediction"].value_counts().plot.pie(
+                autopct='%1.1f%%', ylabel='', title='Truthful vs. Deceptive'
+            ).get_figure()
+        )
+
+        # --- Confidence Score Visualization ---
+        st.subheader("Confidence Score Distribution")
+
+        # Convert confidence column to float if needed
+        results_df["confidence_float"] = results_df["confidence (%)"].astype(float)
+
+        # Histogram of all confidence scores
+        fig, ax = plt.subplots()
+        ax.hist(results_df["confidence_float"], bins=10, color="skyblue", edgecolor="black")
+        ax.set_xlabel("Confidence (%)")
+        ax.set_ylabel("Number of Statements")
+        ax.set_title("Histogram of Confidence Scores")
+        st.pyplot(fig)
+
+        # Boxplot grouped by prediction
+        fig2, ax2 = plt.subplots()
+        results_df.boxplot(column="confidence_float", by="prediction", ax=ax2)
+        ax2.set_ylabel("Confidence (%)")
+        ax2.set_title("Confidence by Prediction")
+        plt.suptitle("")
+        st.pyplot(fig2)

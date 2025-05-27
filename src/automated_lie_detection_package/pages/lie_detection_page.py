@@ -2,6 +2,7 @@ import streamlit as st
 from automated_lie_detection_package.utility import load_local_model, predictionloop
 import pandas as pd
 import os
+from transformers_interpret import SequenceClassificationExplainer
 
 # Load the pretrained model and tokenizer from the local 'models' directory
 tokenizer, model = load_local_model("models")
@@ -43,6 +44,17 @@ if submit_cont.button("Submit"):
         "Prediction": "TRUTHFUL" if risposta == 0 else "DECEPTIVE",
         "Confidence (%)": f"{prob:.2f}"
     })
+    # --- Explainability ---
+    with st.expander("Show model explainability (word importance)"):
+        explainer = SequenceClassificationExplainer(model, tokenizer)
+        # Pass raw_input=True to get attributions for original words
+        word_attributions = explainer(user_input)
+        st.markdown("**Word importances (green means more likely to be classified as predicted):**")
+        highlighted_text = ""
+        for word, score in word_attributions:
+            color = "#ffcccc" if score < 0 else "#ccffcc"
+            highlighted_text += f'<span style="background-color: {color}">{word}</span> '
+        st.markdown(highlighted_text, unsafe_allow_html=True)
 
 # Show history panel and download button if there is history
 if st.session_state.history:
