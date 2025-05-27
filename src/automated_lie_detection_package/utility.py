@@ -79,7 +79,8 @@ def modelprediction(input_text):
 
 def clear_models_folder(models_dir="models"):
     """
-    Deletes all files and subdirectories in the specified models folder.
+    Deletes all files and subdirectories in the specified models folder,
+    except for files named '.gitkeep'.
 
     Args:
         models_dir: The path to the models directory (default: "models").
@@ -89,11 +90,12 @@ def clear_models_folder(models_dir="models"):
     """
     if os.path.exists(models_dir):
         for filename in os.listdir(models_dir):
+            if filename == ".gitkeep":
+                continue
             file_path = os.path.join(models_dir, filename)
             if os.path.isfile(file_path) or os.path.islink(file_path):
                 os.unlink(file_path)
             elif os.path.isdir(file_path):
                 shutil.rmtree(file_path)
-
 
 

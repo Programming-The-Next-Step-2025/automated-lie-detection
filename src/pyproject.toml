@@ -15,20 +15,23 @@ classifiers = [
     "Programming Language :: Python :: 3",
     "Operating System :: OS Independent",
 ]
-license = "MIT"
+license = {text = "MIT"}
 license-files = ["LICEN[CS]E*"]
-
-[project.urls]
-Homepage = "https://github.com/Programming-The-Next-Step-2025/automated-lie-detection"
-Issues = "https://github.com/Programming-The-Next-Step-2025/automated-lie-detection/issues"
-
-[tool.hatch.build.targets.wheel]
-packages = ["automated_lie_detection_package"]
-
 dependencies = [
     "transformers",
     "numpy",
     "streamlit",
     "gdown",
-    "pandas"
+    "pandas",
+    "argparse"
 ]
+
+[project.urls]
+Homepage = "https://github.com/Programming-The-Next-Step-2025/automated-lie-detection"
+Issues = "https://github.com/Programming-The-Next-Step-2025/automated-lie-detection/issues"
+
+[project.scripts]
+liedetect = "automated_lie_detection_package.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["automated_lie_detection_package"]
