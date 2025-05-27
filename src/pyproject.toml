@@ -8,7 +8,7 @@ version = "0.0.1"
 authors = [
   { name="Lucca Pfruender", email="luccip.upn@googlemail.com" },
 ]
-description = "A small example package"
+description = "A small package providing functions and interfaces for automated lie detection."
 readme = "README.md"
 requires-python = ">=3.9"
 classifiers = [
@@ -16,14 +16,12 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 license = {text = "MIT"}
-license-files = ["LICEN[CS]E*"]
 dependencies = [
     "transformers",
     "numpy",
     "streamlit",
     "gdown",
-    "pandas",
-    "argparse"
+    "pandas"
 ]
 
 [project.urls]
@@ -31,7 +29,11 @@ Homepage = "https://github.com/Programming-The-Next-Step-2025/automated-lie-dete
 Issues = "https://github.com/Programming-The-Next-Step-2025/automated-lie-detection/issues"
 
 [project.scripts]
-liedetect = "automated_lie_detection_package.cli:main"
+detect-lie = "automated_lie_detection_package.cli:main"
+
+[tool.hatch.build]
+sources = ["src"]
+include = ["LICENSE"]
 
 [tool.hatch.build.targets.wheel]
 packages = ["automated_lie_detection_package"]

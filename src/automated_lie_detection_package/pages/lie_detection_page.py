@@ -56,3 +56,5 @@ if st.session_state.history:
         mime="text/csv"
     )
             
+if st.button("Next"):
+    st.switch_page("pages/batch_lie_detection_page.py")
