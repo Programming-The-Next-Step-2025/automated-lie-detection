@@ -22,16 +22,13 @@ dependencies = [
     "streamlit",
     "gdown",
     "pandas",
-    "matplotlib.pyplot",
+    "matplotlib",
     "transformers_interpret"
 ]
 
 [project.urls]
 Homepage = "https://github.com/Programming-The-Next-Step-2025/automated-lie-detection"
 Issues = "https://github.com/Programming-The-Next-Step-2025/automated-lie-detection/issues"
-
-[project.scripts]
-detect-lie = "automated_lie_detection_package.cli:main"
 
 [tool.hatch.build]
 sources = ["src"]

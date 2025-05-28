@@ -54,6 +54,8 @@ The folder structure should look like:
 your_project/
 ├── models/
 │   └── [model files go here]
+├── data/
+│   └── exp_data/
 ├── src/
 │   └── automated_lie_detection_package/
 │       └── ...
@@ -84,6 +86,31 @@ modelprediction("I swear I am innocent")
 **Example output:**
 
 "The statement was classified as deceptive with 87.5% confidence."
+
+### Run batch_modelprediction
+
+You can run batch predictions on a CSV or TXT file containing multiple autobiographical statements using the `batch_modelprediction` function.
+
+### Usage
+
+```python
+from automated_lie_detection_package.utility import batch_modelprediction
+
+# For a CSV file (with a column named "statement")
+batch_modelprediction(
+    input_file="data/autobiographical_statements.csv",
+    output_file="data/exp_data/batch_predictions.csv",
+    column="statement"
+)
+
+# For a TXT file (one statement per line)
+batch_modelprediction(
+    input_file="data/my_statements.txt",
+    output_file="data/exp_data/batch_predictions_from_txt.csv"
+)
+```
+
+The function will save the results as a CSV in the data/exp_data/ folder. The output CSV will include columns: statement, prediction, and confidence (%).
 
 ### Run the Streamlit Application
 
@@ -121,6 +148,30 @@ Then make it executable in your terminal:
 ```bash
 chmod +x run.sh
 ```
+#### Streamlit Application Features 
+
+**Single Statement Lie Detection:**
+
+- **Real-time prediction:** Enter any autobiographical statement and receive an instant prediction (truthful or deceptive) with a confidence score.
+
+- **Explainability:** Expand the "Show model explainability" section to see which words contributed most to the model's prediction, highlighted in color.
+
+- **Prediction History:** All your predictions are saved in a session history table, which you can download as a CSV. This file is also automatically saved to `data/exp_data/prediction_history.csv`.
+
+**Batch Lie Detection:**
+
+- **CSV Upload or Example File:** Upload your own CSV (with any separator) or use the provided example file from `data/autobiographical_statements.csv`.
+
+- **Column Selection:** Choose which column contains the statements to analyze.
+
+- **Batch Prediction:** Run predictions on all statements in the file. Results are saved to `data/exp_data/batch_predictions_from_upload.csv`.
+
+- **Download Results:** Download the batch results as a CSV
+
+- **Visualizations:**
+    - Prediction Distribution: See bar and pie charts of truthful vs. deceptive predictions.
+    - Confidence Scores: View a histogram and boxplot of the model's confidence scores, including per-class breakdowns.
+    - Percentages: See the percentage and count of each prediction class.
 
 ### Clear Models Folder  
 

@@ -12,8 +12,6 @@ jupyter: python3
 
 ![Streamlit App Welcome Page](images/welcome_page.png)
 
-![Streamlit App Automated Lie Detector](images/main_page.png)
-
 # Installation
 
 ```bash
@@ -26,7 +24,6 @@ pip3 install git+https://github.com/Programming-The-Next-Step-2025/automated-lie
 > ```bash
 > pip install git+https://github.com/Programming-The-Next-Step-2025/automated-lie-detection.git
 > ```
-
 
 # Model Folder Setup
 
@@ -43,6 +40,8 @@ download_model_folder_from_gdrive()
 your_project/
 ├── models/
 │   └── [model files here]
+├── data/
+│   └── exp_data/
 ├── src/
 │   └── automated_lie_detection_package/
 │       └── ...
@@ -63,6 +62,8 @@ Other model types (e.g., language models for text generation, token classificati
 
 # Usage
 
+## Single Statement Prediction
+
 For a demonstration of using `modelprediction` to classify a statement, see the example below.
 
 ```{python}
@@ -74,6 +75,64 @@ input_text = "I swear I am innocent"
 result = modelprediction(input_text)
 print(result)
 ```
+
+**Example output:**
+```
+The statement was classified as deceptive with 87.5% confidence.
+```
+
+## Batch Prediction
+
+You can run batch predictions on a CSV or TXT file containing multiple autobiographical statements using the `batch_modelprediction` function.
+
+```{python}
+from automated_lie_detection_package.utility import batch_modelprediction
+
+# For a CSV file (with a column named "statement")
+batch_modelprediction(
+    input_file="../data/autobiographical_statements.csv",
+    output_file="../data/exp_data/batch_predictions.csv",
+    column="statement"
+)
+```
+
+- The function will save the results as a CSV in the `data/exp_data/` folder.
+- The output CSV will include columns: `statement`, `prediction`, and `confidence (%)`.
+
+**Notes:**
+- For CSV files, make sure the column containing your statements is named correctly (default: `"statement"`).
+- The function automatically detects the file type and separator.
+- Results are saved and can be further analyzed or visualized in the Streamlit app.
+
+# Streamlit Application Features
+
+## Single Statement Lie Detection
+
+- **Real-time prediction:** Enter any autobiographical statement and receive an instant prediction (truthful or deceptive) with a confidence score.
+- **Explainability:** Expand the "Show model explainability" section to see which words contributed most to the model's prediction, highlighted in color.
+- **Prediction History:** All your predictions are saved in a session history table, which you can download as a CSV. This file is also automatically saved to `data/exp_data/prediction_history.csv`.
+- **Navigation:** Use the "Next" button to move to the batch prediction page.
+
+<div style="display: flex; gap: 16px; align-items: flex-start;">
+  <img src="images/single_statement_lie_detection.png" alt="Streamlit App Single Statement Lie Detection" width="48%">
+  <img src="images/explainability_history.png" alt="Streamlit App Explainability and History CSV" width="48%">
+</div>
+
+## Batch Lie Detection
+
+- **CSV Upload or Example File:** Upload your own CSV (with any separator) or use the provided example file from `data/autobiographical_statements.csv`.
+- **Column Selection:** Choose which column contains the statements to analyze.
+- **Batch Prediction:** Run predictions on all statements in the file. Results are saved to `data/exp_data/batch_predictions_from_upload.csv`.
+- **Download Results:** Download the batch results as a CSV.
+- **Visualizations:**
+  - **Prediction Distribution:** See bar and pie charts of truthful vs. deceptive predictions.
+  - **Confidence Scores:** View a histogram and boxplot of the model's confidence scores, including per-class breakdowns.
+  - **Percentages:** See the percentage and count of each prediction class.
+
+<div style="display: flex; gap: 16px; align-items: flex-start;">
+  <img src="images/batch_lie_detection.png" alt="Streamlit App Multiple Statement Lie Detection" width="48%">
+  <img src="images/batch_prediction.png" alt="Streamlit App Batch Prediction Results" width="48%">
+</div>
 
 # Launching the Streamlit App
 
@@ -187,6 +246,9 @@ The statement was classified as deceptive with 87.5% confidence.
 
 - **modelprediction(input_text)**  
   Classifies a statement as "truthful" or "deceptive" and returns a message with the predicted class and confidence score.
+
+- **batch_modelprediction(input_file, output_file, column="statement")**  
+  Runs predictions on each statement in a CSV or TXT file and saves results to a new CSV with columns: statement, prediction, confidence (%).
 
 - **clear_models_folder(models_dir="models")**  
   Deletes all files and subdirectories in the specified models folder.
