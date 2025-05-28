@@ -58,7 +58,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="automated_lie_detection_files/libs/clipboard/clipboard.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="automated_lie_detection_files/libs/clipboard/clipboard.min.js"></script>
 <script src="automated_lie_detection_files/libs/quarto-html/quarto.js" type="module"></script>
 <script src="automated_lie_detection_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="automated_lie_detection_files/libs/quarto-html/popper.min.js"></script>
@@ -69,6 +69,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="automated_lie_detection_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="automated_lie_detection_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="automated_lie_detection_files/libs/bootstrap/bootstrap-81267100e462c21b3d6c0d5bf76a3417.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
 </head>
@@ -101,33 +104,548 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="introduction" class="level1">
 <h1>Introduction</h1>
 <p><code>automated_lie_detection_package</code> is a Python package for classifying statements as “truthful” or “deceptive” using machine learning models. It provides a simple API for making predictions and can be integrated into various applications.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/welcome_page.png" class="img-fluid figure-img"></p>
+<figcaption>Streamlit App Welcome Page</figcaption>
+</figure>
+</div>
 </section>
 <section id="installation" class="level1">
 <h1>Installation</h1>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip3</span> install git+https://github.com/Programming-The-Next-Step-2025/automated-lie-detection.git</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<blockquote class="blockquote">
+<p><strong>Note:</strong><br>
+Depending on your environment, you may need to use <code>pip</code> instead of <code>pip3</code>, and <code>python</code> instead of <code>python3</code>.<br>
+For example:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install git+https://github.com/Programming-The-Next-Step-2025/automated-lie-detection.git</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</blockquote>
+</section>
+<section id="model-folder-setup" class="level1">
+<h1>Model Folder Setup</h1>
+<p>Before making any predictions, you need to download a pretrained model into a local <code>models/</code> directory.</p>
+<div id="99e0d554" class="cell" data-execution_count="1">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> automated_lie_detection_package <span class="im">import</span> download_model_folder_from_gdrive</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>download_model_folder_from_gdrive()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Retrieving folder contents</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Processing file 1BQHmFSnb2vXK5mOE5FGsZutdF1uwybGf config.json
+Processing file 1BLONRrK9MXjzjpkOKv-D1ap0WOgzh2jd model.safetensors
+Processing file 1BfQqQQ7nQfqH3mS4H58qsBFcCJLutZPh special_tokens_map.json
+Processing file 1Bo1gubAWxn1iGvZ6G_oQypVlvH_Ee7Fy tokenizer_config.json
+Processing file 1BU1AEtGx7GFvlxo8bJwLuaa-Xo9hgBzr tokenizer.json
+Processing file 1BW1RYjeFNeleBmhy9O-m5bMsDK7zmi9d vocab.txt</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Retrieving folder contents completed
+Building directory structure
+Building directory structure completed
+Downloading...
+From: https://drive.google.com/uc?id=1BQHmFSnb2vXK5mOE5FGsZutdF1uwybGf
+To: /Users/luccapfrunder/Documents/GitHub/automated-lie-detection/docs/models/config.json
+  0%|          | 0.00/615 [00:00&lt;?, ?B/s]100%|██████████| 615/615 [00:00&lt;00:00, 1.95MB/s]
+Downloading...
+From (original): https://drive.google.com/uc?id=1BLONRrK9MXjzjpkOKv-D1ap0WOgzh2jd
+From (redirected): https://drive.google.com/uc?id=1BLONRrK9MXjzjpkOKv-D1ap0WOgzh2jd&amp;confirm=t&amp;uuid=0d003ffe-1203-485a-9686-602ef6b2100b
+To: /Users/luccapfrunder/Documents/GitHub/automated-lie-detection/docs/models/model.safetensors
+  0%|          | 0.00/268M [00:00&lt;?, ?B/s]  1%|          | 1.57M/268M [00:00&lt;00:17, 15.4MB/s]  4%|▎         | 9.96M/268M [00:00&lt;00:04, 54.2MB/s]  7%|▋         | 19.4M/268M [00:00&lt;00:03, 71.8MB/s] 11%|█         | 28.8M/268M [00:00&lt;00:02, 80.0MB/s] 14%|█▍        | 37.7M/268M [00:00&lt;00:02, 81.2MB/s] 18%|█▊        | 47.2M/268M [00:00&lt;00:02, 84.8MB/s] 21%|██        | 56.6M/268M [00:00&lt;00:02, 87.2MB/s] 25%|██▍       | 66.1M/268M [00:00&lt;00:02, 88.8MB/s] 28%|██▊       | 75.5M/268M [00:00&lt;00:02, 89.8MB/s] 32%|███▏      | 84.9M/268M [00:01&lt;00:02, 90.8MB/s] 35%|███▌      | 94.4M/268M [00:01&lt;00:01, 91.1MB/s] 39%|███▉      | 104M/268M [00:01&lt;00:01, 90.9MB/s]  42%|████▏     | 113M/268M [00:01&lt;00:01, 86.6MB/s] 46%|████▌     | 123M/268M [00:01&lt;00:01, 89.6MB/s] 50%|████▉     | 133M/268M [00:01&lt;00:01, 92.5MB/s] 54%|█████▎    | 144M/268M [00:01&lt;00:01, 95.9MB/s] 58%|█████▊    | 154M/268M [00:01&lt;00:01, 98.2MB/s] 61%|██████▏   | 165M/268M [00:01&lt;00:01, 99.4MB/s] 65%|██████▌   | 175M/268M [00:01&lt;00:00, 101MB/s]  69%|██████▉   | 186M/268M [00:02&lt;00:00, 101MB/s] 73%|███████▎  | 196M/268M [00:02&lt;00:00, 102MB/s] 77%|███████▋  | 207M/268M [00:02&lt;00:00, 103MB/s] 81%|████████  | 217M/268M [00:02&lt;00:00, 103MB/s] 85%|████████▍ | 228M/268M [00:02&lt;00:00, 103MB/s] 89%|████████▉ | 238M/268M [00:02&lt;00:00, 101MB/s] 93%|█████████▎| 249M/268M [00:02&lt;00:00, 101MB/s] 97%|█████████▋| 260M/268M [00:02&lt;00:00, 103MB/s]100%|██████████| 268M/268M [00:02&lt;00:00, 93.5MB/s]
+Downloading...
+From: https://drive.google.com/uc?id=1BfQqQQ7nQfqH3mS4H58qsBFcCJLutZPh
+To: /Users/luccapfrunder/Documents/GitHub/automated-lie-detection/docs/models/special_tokens_map.json
+  0%|          | 0.00/125 [00:00&lt;?, ?B/s]100%|██████████| 125/125 [00:00&lt;00:00, 397kB/s]
+Downloading...
+From: https://drive.google.com/uc?id=1Bo1gubAWxn1iGvZ6G_oQypVlvH_Ee7Fy
+To: /Users/luccapfrunder/Documents/GitHub/automated-lie-detection/docs/models/tokenizer_config.json
+  0%|          | 0.00/1.23k [00:00&lt;?, ?B/s]100%|██████████| 1.23k/1.23k [00:00&lt;00:00, 3.42MB/s]
+Downloading...
+From: https://drive.google.com/uc?id=1BU1AEtGx7GFvlxo8bJwLuaa-Xo9hgBzr
+To: /Users/luccapfrunder/Documents/GitHub/automated-lie-detection/docs/models/tokenizer.json
+  0%|          | 0.00/711k [00:00&lt;?, ?B/s]100%|██████████| 711k/711k [00:00&lt;00:00, 8.24MB/s]
+Downloading...
+From: https://drive.google.com/uc?id=1BW1RYjeFNeleBmhy9O-m5bMsDK7zmi9d
+To: /Users/luccapfrunder/Documents/GitHub/automated-lie-detection/docs/models/vocab.txt
+  0%|          | 0.00/232k [00:00&lt;?, ?B/s]100%|██████████| 232k/232k [00:00&lt;00:00, 3.97MB/s]
+Download completed</code></pre>
+</div>
+</div>
+<p><strong>Folder structure should look like:</strong></p>
+<pre><code>your_project/
+├── models/
+│   └── [model files here]
+├── data/
+│   └── exp_data/
+├── src/
+│   └── automated_lie_detection_package/
+│       └── ...
+├── run.sh
+└── ...</code></pre>
+</section>
+<section id="supported-model-types" class="level1">
+<h1>Supported Model Types</h1>
+<p>The <code>modelprediction</code> function expects a model folder containing files for a Hugging Face Transformers <strong>sequence classification model</strong> (such as DistilBERT, BERT, RoBERTa, etc.) that can be loaded with <code>AutoTokenizer.from_pretrained</code> and <code>AutoModelForSequenceClassification.from_pretrained</code>.</p>
+<p><strong>Requirements:</strong> - The model folder must include all necessary files (e.g., <code>config.json</code>, <code>pytorch_model.bin</code>, <code>tokenizer.json</code>, <code>vocab.txt</code>, etc.). - The model should be trained or fine-tuned for sequence (text) classification tasks.</p>
+<p><strong>Note:</strong><br>
+Other model types (e.g., language models for text generation, token classification, etc.) are <strong>not supported</strong> by <code>modelprediction</code> and will result in errors.</p>
 </section>
 <section id="usage" class="level1">
 <h1>Usage</h1>
+<section id="single-statement-prediction" class="level2">
+<h2 class="anchored" data-anchor-id="single-statement-prediction">Single Statement Prediction</h2>
 <p>For a demonstration of using <code>modelprediction</code> to classify a statement, see the example below.</p>
-<div id="966beb23" class="cell" data-execution_count="1">
+<div id="130e3e56" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> automated_lie_detection_package <span class="im">import</span> modelprediction</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Example input string</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>input_text <span class="op">=</span> <span class="st">"I swear I am innocent"</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Example usage </span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># predicted_class, confidence = modelprediction(input_text)</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Intended output:</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"predicted_class: Deceptive"</span>)</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"confidence: 87.5%"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> automated_lie_detection_package <span class="im">import</span> modelprediction</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>input_text <span class="op">=</span> <span class="st">"I swear I am innocent"</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Directly call modelprediction with just the input text</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> modelprediction(input_text)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>predicted_class: Deceptive
-confidence: 87.5%</code></pre>
+<pre><code>The statement was classified as deceptive with 68.08% confidence.</code></pre>
 </div>
+</div>
+<p><strong>Example output:</strong></p>
+<pre><code>The statement was classified as deceptive with 87.5% confidence.</code></pre>
+</section>
+<section id="batch-prediction" class="level2">
+<h2 class="anchored" data-anchor-id="batch-prediction">Batch Prediction</h2>
+<p>You can run batch predictions on a CSV or TXT file containing multiple autobiographical statements using the <code>batch_modelprediction</code> function.</p>
+<div id="b910ac3f" class="cell" data-execution_count="3">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> automated_lie_detection_package.utility <span class="im">import</span> batch_modelprediction</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># For a CSV file (with a column named "statement")</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>batch_modelprediction(</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    input_file<span class="op">=</span><span class="st">"../data/autobiographical_statements.csv"</span>,</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    output_file<span class="op">=</span><span class="st">"../data/exp_data/batch_predictions.csv"</span>,</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    column<span class="op">=</span><span class="st">"statement"</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="12">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">statement</th>
+<th data-quarto-table-cell-role="th">prediction</th>
+<th data-quarto-table-cell-role="th">confidence (%)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>When I was seven, I accidentally set the kitch...</td>
+<td>deceptive</td>
+<td>55.09</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>In high school, I built a weather balloon that...</td>
+<td>truthful</td>
+<td>61.59</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>I once got lost in a foreign city for eight ho...</td>
+<td>truthful</td>
+<td>59.39</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>As a child, I believed I could talk to animals...</td>
+<td>deceptive</td>
+<td>54.64</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>One summer, I tried to learn how to skateboard...</td>
+<td>truthful</td>
+<td>74.27</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>During my gap year, I volunteered at a wildlif...</td>
+<td>truthful</td>
+<td>88.20</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>I once accidentally joined a wedding processio...</td>
+<td>truthful</td>
+<td>56.26</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>I spent one winter trying to learn how to knit...</td>
+<td>truthful</td>
+<td>69.89</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>My first job was at a donut shop where I was t...</td>
+<td>truthful</td>
+<td>73.44</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">9</td>
+<td>I once mistook a famous actor for a waiter and...</td>
+<td>deceptive</td>
+<td>66.13</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">10</td>
+<td>Growing up, I had a pet turtle named Mozart wh...</td>
+<td>deceptive</td>
+<td>50.92</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">11</td>
+<td>I failed my driving test three times because I...</td>
+<td>truthful</td>
+<td>82.71</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">12</td>
+<td>I once spent two weeks learning sleight-of-han...</td>
+<td>truthful</td>
+<td>60.35</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">13</td>
+<td>On a dare, I dyed my hair neon green in colleg...</td>
+<td>truthful</td>
+<td>56.90</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">14</td>
+<td>One time, I accidentally sent a love letter to...</td>
+<td>truthful</td>
+<td>76.82</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">15</td>
+<td>I got locked inside a museum bathroom overnigh...</td>
+<td>truthful</td>
+<td>88.63</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">16</td>
+<td>When I was a kid, I wanted to become an astron...</td>
+<td>deceptive</td>
+<td>62.69</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">17</td>
+<td>I once tried to cook Thanksgiving dinner by my...</td>
+<td>deceptive</td>
+<td>56.04</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">18</td>
+<td>During a road trip, I accidentally crossed an ...</td>
+<td>truthful</td>
+<td>84.91</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">19</td>
+<td>I once trained a parrot to say 'Good morning' ...</td>
+<td>deceptive</td>
+<td>59.89</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">20</td>
+<td>I joined a medieval reenactment group in colle...</td>
+<td>truthful</td>
+<td>64.48</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">21</td>
+<td>I once got caught in a sudden snowstorm while ...</td>
+<td>deceptive</td>
+<td>51.88</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">22</td>
+<td>As a teenager, I learned how to juggle and onc...</td>
+<td>truthful</td>
+<td>59.83</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">23</td>
+<td>I created a short comic series in high school ...</td>
+<td>truthful</td>
+<td>63.80</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">24</td>
+<td>One summer, I worked as a scare actor at a hau...</td>
+<td>truthful</td>
+<td>79.81</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">25</td>
+<td>I took a salsa class for a date and ended up b...</td>
+<td>truthful</td>
+<td>70.68</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">26</td>
+<td>I once spent 48 hours in a library during fina...</td>
+<td>truthful</td>
+<td>72.82</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">27</td>
+<td>I taught myself Morse code as a hobby during l...</td>
+<td>truthful</td>
+<td>61.62</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">28</td>
+<td>As a child, I buried a 'time capsule' in our b...</td>
+<td>truthful</td>
+<td>66.75</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">29</td>
+<td>I once won a hot sauce eating contest and coul...</td>
+<td>deceptive</td>
+<td>60.64</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">30</td>
+<td>In a college theatre production, I had to step...</td>
+<td>truthful</td>
+<td>73.69</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">31</td>
+<td>I got chased by a goat while hiking in the cou...</td>
+<td>truthful</td>
+<td>73.68</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">32</td>
+<td>I once wrote a poem that got published in a na...</td>
+<td>truthful</td>
+<td>55.24</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">33</td>
+<td>I adopted a dog on impulse after seeing it in ...</td>
+<td>deceptive</td>
+<td>56.80</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">34</td>
+<td>I learned to unicycle during a summer job at a...</td>
+<td>deceptive</td>
+<td>50.71</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">35</td>
+<td>I tried to make my own cheese at home and ende...</td>
+<td>deceptive</td>
+<td>57.36</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">36</td>
+<td>I once fell asleep on a beach and woke up comp...</td>
+<td>deceptive</td>
+<td>54.90</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">37</td>
+<td>During quarantine, I built a cardboard city in...</td>
+<td>truthful</td>
+<td>68.21</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">38</td>
+<td>I once mistook a live TV interview for a pre-r...</td>
+<td>truthful</td>
+<td>66.48</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">39</td>
+<td>I entered a silent retreat for 10 days and acc...</td>
+<td>truthful</td>
+<td>88.38</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">40</td>
+<td>I learned origami to impress a crush and ended...</td>
+<td>truthful</td>
+<td>52.69</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">41</td>
+<td>I once accidentally joined a marathon when I w...</td>
+<td>truthful</td>
+<td>62.54</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">42</td>
+<td>I baked a cake that exploded in the oven becau...</td>
+<td>truthful</td>
+<td>58.68</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">43</td>
+<td>I once took a midnight swim in a lake and lost...</td>
+<td>truthful</td>
+<td>53.82</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">44</td>
+<td>My friend and I tried to build a raft out of s...</td>
+<td>deceptive</td>
+<td>79.95</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">45</td>
+<td>I taught myself to play ukulele just to win a ...</td>
+<td>truthful</td>
+<td>53.36</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">46</td>
+<td>I ran for student council just to get out of g...</td>
+<td>truthful</td>
+<td>52.81</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">47</td>
+<td>I got mistaken for a tour guide at a museum an...</td>
+<td>truthful</td>
+<td>80.00</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">48</td>
+<td>I used to write fan fiction that became more p...</td>
+<td>deceptive</td>
+<td>70.62</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">49</td>
+<td>I once got stuck in an elevator with a mime wh...</td>
+<td>deceptive</td>
+<td>57.86</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<ul>
+<li>The function will save the results as a CSV in the <code>data/exp_data/</code> folder.</li>
+<li>The output CSV will include columns: <code>statement</code>, <code>prediction</code>, and <code>confidence (%)</code>.</li>
+</ul>
+<p><strong>Notes:</strong> - For CSV files, make sure the column containing your statements is named correctly (default: <code>"statement"</code>). - The function automatically detects the file type and separator. - Results are saved and can be further analyzed or visualized in the Streamlit app.</p>
+</section>
+</section>
+<section id="streamlit-application-features" class="level1">
+<h1>Streamlit Application Features</h1>
+<section id="single-statement-lie-detection" class="level2">
+<h2 class="anchored" data-anchor-id="single-statement-lie-detection">Single Statement Lie Detection</h2>
+<ul>
+<li><strong>Real-time prediction:</strong> Enter any autobiographical statement and receive an instant prediction (truthful or deceptive) with a confidence score.</li>
+<li><strong>Explainability:</strong> Expand the “Show model explainability” section to see which words contributed most to the model’s prediction, highlighted in color.</li>
+<li><strong>Prediction History:</strong> All your predictions are saved in a session history table, which you can download as a CSV. This file is also automatically saved to <code>data/exp_data/prediction_history.csv</code>.</li>
+<li><strong>Navigation:</strong> Use the “Next” button to move to the batch prediction page.</li>
+</ul>
+<div style="display: flex; gap: 16px; align-items: flex-start;">
+<p><img src="images/single_statement_lie_detection.png" alt="Streamlit App Single Statement Lie Detection" width="48%"> <img src="images/explainability_history.png" alt="Streamlit App Explainability and History CSV" width="48%"></p>
+</div>
+</section>
+<section id="batch-lie-detection" class="level2">
+<h2 class="anchored" data-anchor-id="batch-lie-detection">Batch Lie Detection</h2>
+<ul>
+<li><strong>CSV Upload or Example File:</strong> Upload your own CSV (with any separator) or use the provided example file from <code>data/autobiographical_statements.csv</code>.</li>
+<li><strong>Column Selection:</strong> Choose which column contains the statements to analyze.</li>
+<li><strong>Batch Prediction:</strong> Run predictions on all statements in the file. Results are saved to <code>data/exp_data/batch_predictions_from_upload.csv</code>.</li>
+<li><strong>Download Results:</strong> Download the batch results as a CSV.</li>
+<li><strong>Visualizations:</strong>
+<ul>
+<li><strong>Prediction Distribution:</strong> See bar and pie charts of truthful vs.&nbsp;deceptive predictions.</li>
+<li><strong>Confidence Scores:</strong> View a histogram and boxplot of the model’s confidence scores, including per-class breakdowns.</li>
+<li><strong>Percentages:</strong> See the percentage and count of each prediction class.</li>
+</ul></li>
+</ul>
+<div style="display: flex; gap: 16px; align-items: flex-start;">
+<p><img src="images/batch_lie_detection.png" alt="Streamlit App Multiple Statement Lie Detection" width="48%"> <img src="images/batch_prediction.png" alt="Streamlit App Batch Prediction Results" width="48%"></p>
+</div>
+</section>
+</section>
+<section id="launching-the-streamlit-app" class="level1">
+<h1>Launching the Streamlit App</h1>
+<p>To launch the web app, run the following command from your project root (where <code>run.sh</code> is located):</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./run.sh</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This will start the Streamlit app, which you can access in your browser (default: http://localhost:8501).</p>
+</section>
+<section id="starting-the-streamlit-app-without-run.sh" class="level1">
+<h1>Starting the Streamlit App Without <code>run.sh</code></h1>
+<p>If you do <strong>not</strong> have the <code>run.sh</code> script (for example, if you installed via <code>pip3</code> and did not clone the repo), you can start the app manually with:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-m</span> streamlit run src/automated_lie_detection_package/app.py <span class="at">--server.port</span><span class="op">=</span>8501</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<blockquote class="blockquote">
+<p><strong>Note:</strong><br>
+You can use <code>python</code> instead of <code>python3</code> if that’s how Python is invoked on your system.<br>
+You can change the number after <code>--server.port</code> to any available port, as long as that port is not already in use.</p>
+</blockquote>
+</section>
+<section id="creating-run.sh-yourself" class="level1">
+<h1>Creating <code>run.sh</code> Yourself</h1>
+<p>If you want to create the <code>run.sh</code> script for convenience, create a new file named <code>run.sh</code> in your project root with the following content:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-m</span> streamlit run src/automated_lie_detection_package/app.py <span class="at">--server.port</span><span class="op">=</span>8501</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Or, if your environment uses <code>python</code> instead of <code>python3</code>:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> streamlit run src/automated_lie_detection_package/app.py <span class="at">--server.port</span><span class="op">=</span>8501</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Then make it executable:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> +x run.sh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="launching-the-streamlit-app-1" class="level1">
+<h1>Launching the Streamlit App</h1>
+<p>To launch the web app, run the following command from your project root (where <code>run.sh</code> is located):</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./run.sh</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This will start the Streamlit app, which you can access in your browser (default: http://localhost:8501).</p>
+</section>
+<section id="starting-the-streamlit-app-without-run.sh-1" class="level1">
+<h1>Starting the Streamlit App Without <code>run.sh</code></h1>
+<p>If you do <strong>not</strong> have the <code>run.sh</code> script (for example, if you installed via <code>pip3</code> and did not clone the repo), you can start the app manually with:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-m</span> streamlit run path/to/app.py <span class="at">--server.port</span><span class="op">=</span>8501</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Replace <code>path/to/app.py</code> with the actual path to the app file, for example:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-m</span> streamlit run src/automated_lie_detection_package/app.py <span class="at">--server.port</span><span class="op">=</span>8501</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If needed, the number after <code>--server.port</code> can be changed to any available port, as long as that port is not already in use.</p>
+<p><strong>Note</strong></p>
+<p>Depending on your environment, you may need to use pip instead of pip3. For example, on some systems, the commands would be:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-m</span> streamlit run path/to/app.py <span class="at">--server.port</span><span class="op">=</span>8501</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="clearing-the-models-folder" class="level1">
+<h1>Clearing the Models Folder</h1>
+<p>If you want to remove all files and subdirectories from the <code>models</code> folder (for example, before downloading a new model), use the <code>clear_models_folder</code> function:</p>
+<div id="3b1dc766" class="cell" data-execution_count="4">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> automated_lie_detection_package <span class="im">import</span> clear_models_folder</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="co"># This will delete all files and subfolders in the 'models' directory</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>clear_models_folder()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 </section>
 <section id="use-cases" class="level1">
@@ -136,19 +654,31 @@ confidence: 87.5%</code></pre>
 <li>Automated interview analysis</li>
 <li>Security screening</li>
 <li>Academic research on deception detection</li>
+<li>Personal statement analysis</li>
 </ul>
 </section>
 <section id="example-output" class="level1">
 <h1>Example Output</h1>
-<pre><code>predicted_class: Deceptive
-confidence: 87.5%
-include screenshots here</code></pre>
+<pre><code>The statement was classified as deceptive with 87.5% confidence.</code></pre>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/modelprediction.png" class="img-fluid figure-img"></p>
+<figcaption>Prediction Example</figcaption>
+</figure>
+</div>
 </section>
 <section id="api-reference" class="level1">
 <h1>API Reference</h1>
 <ul>
-<li><strong>modelprediction(input_text)</strong><br>
-Classifies a statement as “truthful” or “deceptive” and returns the predicted class and confidence score.</li>
+<li><p><strong>download_model_folder_from_gdrive(gdrive_folder_url=“https://drive.google.com/drive/folders/1BByWnxuJ8gXWDPEWjPjAnU4iVaeQp1dZ?usp=sharing”, output_dir=“models”)</strong><br>
+Downloads the pretrained model from Google Drive into the specified directory.<br>
+If no URL is provided, the default public model folder will be used.</p></li>
+<li><p><strong>modelprediction(input_text)</strong><br>
+Classifies a statement as “truthful” or “deceptive” and returns a message with the predicted class and confidence score.</p></li>
+<li><p><strong>batch_modelprediction(input_file, output_file, column=“statement”)</strong><br>
+Runs predictions on each statement in a CSV or TXT file and saves results to a new CSV with columns: statement, prediction, confidence (%).</p></li>
+<li><p><strong>clear_models_folder(models_dir=“models”)</strong><br>
+Deletes all files and subdirectories in the specified models folder.</p></li>
 </ul>
 </section>
 <section id="faq" class="level1">
@@ -156,7 +686,7 @@ Classifies a statement as “truthful” or “deceptive” and returns the pred
 <p><strong>Q:</strong> What input does <code>modelprediction</code> expect?<br>
 <strong>A:</strong> A single string statement.</p>
 <p><strong>Q:</strong> What does the function return?<br>
-<strong>A:</strong> The predicted class (“truthful” or “deceptive”) and a confidence percentage.</p>
+<strong>A:</strong> A message string describing the predicted class (“truthful” or “deceptive”) and the confidence percentage.</p>
 </section>
 <section id="license" class="level1">
 <h1>License</h1>
@@ -165,7 +695,7 @@ Classifies a statement as “truthful” or “deceptive” and returns the pred
 <section id="credits" class="level1">
 <h1>Credits</h1>
 <p>Developed by Lucca Pfründer.<br>
-Built with XXX.</p>
+Built with Python, Hugging Face Transformers, and Streamlit.</p>
 </section>
 
 </main>
