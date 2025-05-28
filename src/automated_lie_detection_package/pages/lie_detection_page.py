@@ -33,7 +33,7 @@ if submit_cont.button("Submit"):
     # Display the model's prediction and confidence score
     feedback_container.markdown(
         f"### Model Feedback\n"
-        f"The model predicts that your statement is classified as **{'TRUTHFUL' if risposta == 0 else 'DECEPTIVE'}**.\n"
+        f"The model predicts that your statement is classified as **{'TRUTHFUL' if risposta == 1 else 'DECEPTIVE'}**.\n"
         f"**Confidence Score:** {prob:.2f}%"
     )
     # Show a progress bar representing the confidence score
