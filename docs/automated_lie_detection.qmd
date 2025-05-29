@@ -124,20 +124,17 @@ batch_modelprediction(
   - **Prediction Distribution:** See bar and pie charts of truthful vs. deceptive predictions.
   - **Confidence Scores:** View a histogram and boxplot of the model's confidence scores, including per-class distributions.
 
-::: {layout-ncol=2}
 ![Streamlit App Multiple Statement Lie Detection](images/batch_lie_detection.png)
+
 ![Streamlit App Batch Prediction Results](images/batch_prediction.png)
-:::
 
-::: {layout-ncol=2}
 ![Bar Chart: Prediction Distribution](images/bar_plot.png)
-![Pie Chart: Prediction Distribution](images/pie_chart.png)
-:::
 
-::: {layout-ncol=2}
+![Pie Chart: Prediction Distribution](images/pie_chart.png)
+
 ![Histogram: Confidence Scores](images/histogram.png)
+
 ![Box Plot: Confidence by Prediction](images/box_plot.png)
-:::
 
 # Launching the Streamlit App
 
