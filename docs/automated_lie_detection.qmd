@@ -3,6 +3,7 @@ title: "automated_lie_detection_package demo"
 format:
   html:
     code-fold: true
+    self-contained: true
 jupyter: python3
 ---
 
