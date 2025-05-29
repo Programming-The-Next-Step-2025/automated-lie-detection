@@ -1,3 +1,0 @@
-from automated_lie_detection_package.utility import download_model_folder_from_gdrive
-
-download_model_folder_from_gdrive("https://drive.google.com/drive/folders/1BByWnxuJ8gXWDPEWjPjAnU4iVaeQp1dZ?usp=sharing")

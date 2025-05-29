@@ -11,12 +11,12 @@ tokenizer, model = load_local_model("models")
 if "history" not in st.session_state:
     st.session_state.history = []
 
-# Set up the Streamlit app UI
+# Page text
 st.title("Lie Detection of Single Statements")
 st.write("Do you want to know if your autobiographical statement is truthful or deceptive?")
 st.write("If you want to test another statement, simply delete your input and press submit again.")
 
-# Create empty containers for dynamic UI elements
+# Create empty containers for dynamic elements
 input_container = st.empty()
 submit_cont = st.empty()
 feedback_container = st.empty()
@@ -44,10 +44,9 @@ if submit_cont.button("Submit"):
         "Prediction": "TRUTHFUL" if risposta == 0 else "DECEPTIVE",
         "Confidence (%)": f"{prob:.2f}"
     })
-    # --- Explainability ---
+    # Explainability
     with st.expander("Show model explainability (word importance)"):
         explainer = SequenceClassificationExplainer(model, tokenizer)
-        # Pass raw_input=True to get attributions for original words
         word_attributions = explainer(user_input)
         st.markdown("**Word importances (green means more likely to be classified as predicted):**")
         highlighted_text = ""
@@ -72,6 +71,7 @@ if st.session_state.history:
     exp_data_dir = "data/exp_data"
     os.makedirs(exp_data_dir, exist_ok=True)
     df.to_csv(os.path.join(exp_data_dir, "prediction_history.csv"), index=False)
-            
+
+#Next button           
 if st.button("Next"):
     st.switch_page("pages/batch_lie_detection_page.py")

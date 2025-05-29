@@ -4,18 +4,20 @@ from automated_lie_detection_package.utility import batch_modelprediction
 import csv
 import matplotlib.pyplot as plt
 
+# Page text
 st.title("Lie Detection of Multiple Statements")
 st.write("Upload a CSV file with a column containing autobiographical statements for batch prediction, or use the default example file.")
 
+# Default CSV
 use_default = st.checkbox("Use default example CSV from data/autobiographical_statements.csv")
 
 uploaded_file = None
 df = None
 
+# Data upload
 if use_default:
     default_path = "data/autobiographical_statements.csv"
     try:
-        # Use the same logic as batch_modelprediction
         df = pd.read_csv(default_path, sep=";")
         st.success(f"Loaded default file: {default_path}")
     except Exception as e:
@@ -23,7 +25,7 @@ if use_default:
 else:
     uploaded_file = st.file_uploader("Choose a CSV file", type="csv")
     if uploaded_file is not None:
-        # Try to auto-detect separator for robustness
+        # Auto-detect separator 
         sample = uploaded_file.read(2048).decode("utf-8")
         uploaded_file.seek(0)
         try:
@@ -33,10 +35,11 @@ else:
             sep = ","
         df = pd.read_csv(uploaded_file, sep=sep)
 
+# Data preview and column choice
 if df is not None:
     st.write("Preview of data:")
     st.dataframe(df.head())
-    # Let user pick the column, default to "statement" if present
+    # Let user pick the column
     possible_columns = list(df.columns)
     if possible_columns:
         default_col = "statement" if "statement" in possible_columns else possible_columns[0]
@@ -49,9 +52,10 @@ if df is not None:
         st.error("No suitable columns found in the data.")
         column_name = None
 
+# Batch prediction and results
 if df is not None and column_name:
     if st.button("Run Batch Prediction"):
-        # Save the DataFrame to a temp CSV with sep=";"
+        # Save the DataFrame to a temporary CSV with sep=";"
         temp_input = "data/temp_uploaded.csv"
         df.to_csv(temp_input, index=False, sep=";")
         output_file = "data/exp_data/batch_predictions_from_upload.csv"
@@ -70,7 +74,7 @@ if df is not None and column_name:
             mime="text/csv"
         )
 
-        # --- Visualization ---
+        # Visualization 
         st.subheader("Prediction Distribution")
         # Bar chart
         st.bar_chart(results_df["prediction"].value_counts())
@@ -82,7 +86,7 @@ if df is not None and column_name:
             ).get_figure()
         )
 
-        # --- Confidence Score Visualization ---
+        # Confidence score visualization
         st.subheader("Confidence Score Distribution")
 
         # Convert confidence column to float if needed

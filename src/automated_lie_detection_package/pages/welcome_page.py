@@ -1,5 +1,6 @@
 import streamlit as st
 
+#Page text
 st.title("Welcome to the _'AUTOMATED LIE DETECTOR'_")
 st.write("""
 This interactive app lets you explore how an AI model, trained on autobiographical statements, classifies text as **truthful** or **deceptive**.
@@ -13,5 +14,6 @@ This interactive app lets you explore how an AI model, trained on autobiographic
 This tool is for educational and demonstration purposes only. The model is not perfect and should not be used for high-stakes or legal decisions.
 """)
 
+#Button
 if st.button("Next"):
     st.switch_page("pages/lie_detection_page.py")

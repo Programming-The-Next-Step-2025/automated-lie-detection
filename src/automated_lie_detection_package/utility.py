@@ -16,6 +16,11 @@ def download_model_folder_from_gdrive(gdrive_folder_url="https://drive.google.co
 
     Returns:
         None
+
+    Example:
+        >>> from automated_lie_detection_package.utility import download_model_folder_from_gdrive
+        >>> download_model_folder_from_gdrive()
+        # Downloads the default model to the 'models' directory
     """
     os.makedirs(output_dir, exist_ok=True)
     gdown.download_folder(url=gdrive_folder_url, output=output_dir, quiet=False, use_cookies=False)
@@ -42,7 +47,7 @@ def predictionloop(frase, tokenizer, model):
     Args:
         frase: The input text to be processed.
     Returns:
-        risposta: The prediction result (1 for truthful, 0 for deceptive).
+        risposta: The prediction result (0 for truthful, 1 for deceptive).
         prob: The confidence score of the prediction.
     """
      # Tokenize the text and convert to input IDs
@@ -66,6 +71,11 @@ def modelprediction(input_text):
 
     Returns:
         message: A string describing the predicted class ('truthful' or 'deceptive') and the confidence score as a percentage.
+
+    Example:
+        >>> from automated_lie_detection_package.utility import modelprediction
+        >>> modelprediction("I always tell the truth.")
+        'The statement was classified as truthful with 97.23% confidence.'
     """
     tokenizer = AutoTokenizer.from_pretrained("models")
     model = AutoModelForSequenceClassification.from_pretrained("models", use_safetensors=True)
@@ -88,6 +98,11 @@ def clear_models_folder(models_dir="models"):
 
     Returns:
         None
+        
+    Example:
+        >>> from automated_lie_detection_package.utility import clear_models_folder
+        >>> clear_models_folder()
+        # Removes all files and folders in 'models' except '.gitkeep'
     """
     if os.path.exists(models_dir):
         for filename in os.listdir(models_dir):
@@ -117,6 +132,15 @@ def batch_modelprediction(
 
     Returns:
         DataFrame with predictions.
+
+    Example:
+        >>> from automated_lie_detection_package.utility import batch_modelprediction
+        >>> batch_modelprediction(
+        ...     input_file="data/autobiographical_statements.csv",
+        ...     output_file="data/exp_data/batch_predictions.csv",
+        ...     column="statement"
+        ... )
+        # Results saved to data/exp_data/batch_predictions.csv
     """
     # Ensure output directory exists
     os.makedirs(os.path.dirname(output_file), exist_ok=True)

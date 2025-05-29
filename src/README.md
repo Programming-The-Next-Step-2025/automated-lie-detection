@@ -4,7 +4,7 @@ This project provides an interface for assessing the credibility of autobiograph
 
 ## Technical Overview
 
-The application is built using Streamlit, allowing users to submit statements of any length and receive real-time feedback. A pretrained DistilBERT model powers the predictions, determining whether a statement is likely true or false, along with how confident the model is in its prediction.
+The application is built using Streamlit, allowing users to submit statements of any length and receive real-time feedback. A pretrained DistilBERT model underlies the predictions, determining whether a statement is likely true or false, along with how confident the model is in its prediction.
 
 ## Intended Use
 
@@ -22,16 +22,6 @@ You can install the package via pip (from the project root):
 pip3 install -e src
 # or
 pip install -e src
-```
-
-You can also install the package directly from GitHub:
-
-```bash
-pip3 install git+https://github.com/Programming-The-Next-Step-2025/automated-lie-detection.git@week-4#egg=automated_lie_detection_package
-
-# or 
-
-pip install git+https://github.com/Programming-The-Next-Step-2025/automated-lie-detection.git@week-4#egg=automated_lie_detection_package
 ```
 
 **Note:**
@@ -97,30 +87,40 @@ You can run batch predictions on a CSV or TXT file containing multiple autobiogr
 from automated_lie_detection_package.utility import batch_modelprediction
 
 # For a CSV file (with a column named "statement")
-batch_modelprediction(
-    input_file="data/autobiographical_statements.csv",
-    output_file="data/exp_data/batch_predictions.csv",
-    column="statement"
-)
+batch_modelprediction()
+```
 
-# For a TXT file (one statement per line)
+By default, this will:
+
+- Use the example file at data/autobiographical_statements.csv
+- Save results to data/exp_data/batch_predictions.csv
+- Use the column named "statement"
+
+You can adjust the following parameters to use your own files or columns:
+
+```python
 batch_modelprediction(
-    input_file="data/my_statements.txt",
-    output_file="data/exp_data/batch_predictions_from_txt.csv"
+    input_file="path/to/your_file.csv",    
+    output_file="path/to/save_results.csv",  
+    column="your_column_name"              
 )
 ```
 
-The function will save the results as a CSV in the data/exp_data/ folder. The output CSV will include columns: statement, prediction, and confidence (%).
-
 ### Run the Streamlit Application
 
-If you have the run.sh script, run the app with:
+If you have the run.sh script, first make it executable in your terminal: 
+
+```bash
+chmod +x run.sh
+```
+
+Then run the app with:
 
 ```bash
 ./run.sh
 ```
 
-If your file structure does not include the run.sh file, run the following in your terminal:
+If your file structure does not include the run.sh file or it doesn't function, run the following in your terminal:
 
 ```bash
 python3 -m streamlit run src/automated_lie_detection_package/app.py --server.port=8501
@@ -154,7 +154,7 @@ chmod +x run.sh
 
 - **Real-time prediction:** Enter any autobiographical statement and receive an instant prediction (truthful or deceptive) with a confidence score.
 
-- **Explainability:** Expand the "Show model explainability" section to see which words contributed most to the model's prediction, highlighted in color.
+- **Explainability:** See which words contributed most to the model's prediction, highlighted in green color.
 
 - **Prediction History:** All your predictions are saved in a session history table, which you can download as a CSV. This file is also automatically saved to `data/exp_data/prediction_history.csv`.
 
@@ -170,9 +170,8 @@ chmod +x run.sh
 
 - **Visualizations:**
     - Prediction Distribution: See bar and pie charts of truthful vs. deceptive predictions.
-    - Confidence Scores: View a histogram and boxplot of the model's confidence scores, including per-class breakdowns.
-    - Percentages: See the percentage and count of each prediction class.
-
+    - Confidence Scores: View a histogram and boxplot of the model's confidence scores, also per class.
+    
 ### Clear Models Folder  
 
 If you want to remove all files and subdirectories from the models folder (for example, before downloading a new model):

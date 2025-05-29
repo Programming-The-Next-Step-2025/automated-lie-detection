@@ -15,19 +15,20 @@ jupyter: python3
 # Installation
 
 ```bash
-pip3 install git+https://github.com/Programming-The-Next-Step-2025/automated-lie-detection.git
+pip3 install -e src
 ```
 
 > **Note:**  
 > Depending on your environment, you may need to use `pip` instead of `pip3`, and `python` instead of `python3`.  
 > For example:
 > ```bash
-> pip install git+https://github.com/Programming-The-Next-Step-2025/automated-lie-detection.git
+> pip install -e src
 > ```
 
 # Model Folder Setup
 
-Before making any predictions, you need to download a pretrained model into a local `models/` directory.
+Before making any predictions, you need to download a pretrained model into a local `models/` directory. 
+By default, the following function downloads a DistilBERT model that has been pretrained to predict lies and truths.
 
 ```{python}
 from automated_lie_detection_package import download_model_folder_from_gdrive
@@ -51,14 +52,15 @@ your_project/
 
 # Supported Model Types
 
-The `modelprediction` function expects a model folder containing files for a Hugging Face Transformers **sequence classification model** (such as DistilBERT, BERT, RoBERTa, etc.) that can be loaded with `AutoTokenizer.from_pretrained` and `AutoModelForSequenceClassification.from_pretrained`.
+The `modelprediction` and `batch_modelprediction` function expects a model folder containing files for a Hugging Face Transformers **sequence classification model** (such as DistilBERT, BERT, RoBERTa, etc.) that can be loaded with `AutoTokenizer.from_pretrained` and `AutoModelForSequenceClassification.from_pretrained`.
 
 **Requirements:**
-- The model folder must include all necessary files (e.g., `config.json`, `pytorch_model.bin`, `tokenizer.json`, `vocab.txt`, etc.).
-- The model should be trained or fine-tuned for sequence (text) classification tasks.
+
+- All necessary files (e.g., `config.json`, `pytorch_model.bin`, `tokenizer.json`, `vocab.txt`, etc.).
+- Model trained or fine-tuned for sequence (text) classification tasks.
 
 **Note:**  
-Other model types (e.g., language models for text generation, token classification, etc.) are **not supported** by `modelprediction` and will result in errors.
+Other model types (e.g., language models for text generation, token classification, etc.) are **not supported** by `modelprediction` and `batch_modelprediction`.
 
 # Usage
 
@@ -76,14 +78,9 @@ result = modelprediction(input_text)
 print(result)
 ```
 
-**Example output:**
-```
-The statement was classified as deceptive with 87.5% confidence.
-```
-
 ## Batch Prediction
 
-You can run batch predictions on a CSV or TXT file containing multiple autobiographical statements using the `batch_modelprediction` function.
+You can run predictions on a CSV or TXT file containing multiple autobiographical statements using the `batch_modelprediction` function.
 
 ```{python}
 from automated_lie_detection_package.utility import batch_modelprediction
@@ -97,46 +94,60 @@ batch_modelprediction(
 ```
 
 - The function will save the results as a CSV in the `data/exp_data/` folder.
-- The output CSV will include columns: `statement`, `prediction`, and `confidence (%)`.
+- The output CSV includes the columns: `statement`, `prediction`, and `confidence (%)`.
 
 **Notes:**
 - For CSV files, make sure the column containing your statements is named correctly (default: `"statement"`).
-- The function automatically detects the file type and separator.
-- Results are saved and can be further analyzed or visualized in the Streamlit app.
+- File type and separator are automatically detected.
+- Results are saved and can be further visualized in the Streamlit app.
 
 # Streamlit Application Features
 
 ## Single Statement Lie Detection
 
 - **Real-time prediction:** Enter any autobiographical statement and receive an instant prediction (truthful or deceptive) with a confidence score.
-- **Explainability:** Expand the "Show model explainability" section to see which words contributed most to the model's prediction, highlighted in color.
-- **Prediction History:** All your predictions are saved in a session history table, which you can download as a CSV. This file is also automatically saved to `data/exp_data/prediction_history.csv`.
-- **Navigation:** Use the "Next" button to move to the batch prediction page.
+- **Explainability:** See which words contributed most to the model's prediction, highlighted in green color.
+- **Prediction History:** All your predictions are saved in a session history table, which you can download as a CSV (automatically saved as `data/exp_data/prediction_history.csv`).
 
-<div style="display: flex; gap: 16px; align-items: flex-start;">
-  <img src="images/single_statement_lie_detection.png" alt="Streamlit App Single Statement Lie Detection" width="48%">
-  <img src="images/explainability_history.png" alt="Streamlit App Explainability and History CSV" width="48%">
-</div>
+::: {layout-ncol=2}
+![Streamlit App Single Statement Lie Detection](images/single_statement_lie_detection.png)
+![Streamlit App Explainability and History CSV](images/explainability_history.png)
+:::
 
 ## Batch Lie Detection
 
-- **CSV Upload or Example File:** Upload your own CSV (with any separator) or use the provided example file from `data/autobiographical_statements.csv`.
+- **CSV Upload or Example File:** Upload your own CSV (with any separator) or use the default example: `data/autobiographical_statements.csv`.
 - **Column Selection:** Choose which column contains the statements to analyze.
 - **Batch Prediction:** Run predictions on all statements in the file. Results are saved to `data/exp_data/batch_predictions_from_upload.csv`.
-- **Download Results:** Download the batch results as a CSV.
+- **Download Results:** Download the results as a CSV.
 - **Visualizations:**
   - **Prediction Distribution:** See bar and pie charts of truthful vs. deceptive predictions.
-  - **Confidence Scores:** View a histogram and boxplot of the model's confidence scores, including per-class breakdowns.
-  - **Percentages:** See the percentage and count of each prediction class.
+  - **Confidence Scores:** View a histogram and boxplot of the model's confidence scores, including per-class distributions.
 
-<div style="display: flex; gap: 16px; align-items: flex-start;">
-  <img src="images/batch_lie_detection.png" alt="Streamlit App Multiple Statement Lie Detection" width="48%">
-  <img src="images/batch_prediction.png" alt="Streamlit App Batch Prediction Results" width="48%">
-</div>
+::: {layout-ncol=2}
+![Streamlit App Multiple Statement Lie Detection](images/batch_lie_detection.png)
+![Streamlit App Batch Prediction Results](images/batch_prediction.png)
+:::
+
+::: {layout-ncol=2}
+![Bar Chart: Prediction Distribution](images/bar_plot.png)
+![Pie Chart: Prediction Distribution](images/pie_chart.png)
+:::
+
+::: {layout-ncol=2}
+![Histogram: Confidence Scores](images/histogram.png)
+![Box Plot: Confidence by Prediction](images/box_plot.png)
+:::
 
 # Launching the Streamlit App
 
-To launch the web app, run the following command from your project root (where `run.sh` is located):
+If you have the run.sh script, first make it executable in your terminal: 
+
+```bash
+chmod +x run.sh
+```
+
+To launch the app, run the following command from your project root (where `run.sh` is located):
 
 ```bash
 ./run.sh
@@ -146,7 +157,7 @@ This will start the Streamlit app, which you can access in your browser (default
 
 # Starting the Streamlit App Without `run.sh`
 
-If you do **not** have the `run.sh` script (for example, if you installed via `pip3` and did not clone the repo), you can start the app manually with:
+If you do **not** have the `run.sh` script (for example, if you did not clone the repo), you can start the app manually with:
 
 ```bash
 python3 -m streamlit run src/automated_lie_detection_package/app.py --server.port=8501
@@ -178,40 +189,6 @@ Then make it executable:
 chmod +x run.sh
 ```
 
-# Launching the Streamlit App
-
-To launch the web app, run the following command from your project root (where `run.sh` is located):
-
-```bash
-./run.sh
-```
-
-This will start the Streamlit app, which you can access in your browser (default: http://localhost:8501).
-
-# Starting the Streamlit App Without `run.sh`
-
-If you do **not** have the `run.sh` script (for example, if you installed via `pip3` and did not clone the repo), you can start the app manually with:
-
-```bash
-python3 -m streamlit run path/to/app.py --server.port=8501
-```
-
-Replace `path/to/app.py` with the actual path to the app file, for example:
-```bash
-python3 -m streamlit run src/automated_lie_detection_package/app.py --server.port=8501
-```
-
-If needed, the number after `--server.port` can be changed to any available port, as long as that port is not already in use.
-
-**Note**
-
-Depending on your environment, you may need to use pip instead of pip3.
-For example, on some systems, the commands would be:
-
-```bash
-python3 -m streamlit run path/to/app.py --server.port=8501
-```
-
 # Clearing the Models Folder
 
 If you want to remove all files and subdirectories from the `models` folder (for example, before downloading a new model), use the `clear_models_folder` function:
@@ -229,14 +206,6 @@ clear_models_folder()
 - Security screening
 - Academic research on deception detection
 - Personal statement analysis
-
-# Example Output
-
-```
-The statement was classified as deceptive with 87.5% confidence.
-```
-
-![Prediction Example](images/modelprediction.png)
 
 # API Reference
 
