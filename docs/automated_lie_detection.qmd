@@ -109,10 +109,9 @@ batch_modelprediction(
 - **Explainability:** See which words contributed most to the model's prediction, highlighted in green color.
 - **Prediction History:** All your predictions are saved in a session history table, which you can download as a CSV (automatically saved as `data/exp_data/prediction_history.csv`).
 
-::: {layout-ncol=2}
 ![Streamlit App Single Statement Lie Detection](images/single_statement_lie_detection.png)
-![Streamlit App Explainability and History CSV](images/explainability_history.png)
-:::
+
+![Streamlit App Explainability and History CSV](images/eplainability_history.png)
 
 ## Batch Lie Detection
 
